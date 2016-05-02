@@ -16,7 +16,7 @@ myDictionary = {
 myDictionary["fish"] = "sashimi"
 myDictionary["human"] = "monkey sees mokeys do monkey has no iq copycat"
 
-print myDictionary["fish"]
+print myDictionary["human"]
 
 # print myDecisionMaker[1==1]
 for value in myVariable2:
