@@ -14,6 +14,7 @@ myDictionary = {
     "dog": "test"
     }
 myDictionary["fish"] = "sashimi"
+myDictionary["human"] = "monkey sees mokeys do monkey has no iq copycat"
 
 print myDictionary["fish"]
 
