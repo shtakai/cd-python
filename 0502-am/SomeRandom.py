@@ -3,9 +3,9 @@ print ("hello world")
 myVariable = ["phrase1", "phrase2", 37]
 
 myVariable[0] = "new phrase"
-#タプル　変更できない
 myVariable2 = ("banana", "flower", 42)
-#動かない
-# myVariable2[0] = "sashimi"
+myDecisionMaker = ("decision1","decision2")
+# True:1 False:0
+print myDecisionMaker[1==1]
 for value in myVariable2:
     print value
