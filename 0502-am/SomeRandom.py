@@ -10,7 +10,7 @@ myDecisionMaker = ("decision1","decision2")
 
 #dictionary
 myDictionary = {
-    "cat": "harry mammals that make me sneeze!",
+    "cat": "OSASHIMI SUSHI CAT",
     "dog": "test"
     }
 myDictionary["fish"] = "sashimi"
