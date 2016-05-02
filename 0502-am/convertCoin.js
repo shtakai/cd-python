@@ -1,6 +1,8 @@
 convertCoin(10.25);
 convertCoin(22.99);
 
+convertCoin(159.79);
+convertCoin(3159.69);
 
 function convertCoin(input) {
   var result = [{
