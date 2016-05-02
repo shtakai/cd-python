@@ -36,9 +36,11 @@ function convertCoin(input) {
   for (var i in result) {
     result[i]['amount'] = parseInt(remain / result[i]['cent']);
     remain -= result[i]['cent'] * result[i]['amount'];
+    // console.log('---');
+    // console.log(result);
   }
   console.log();
-  console.log('input(dollar)', input);
+  console.log('input(cent)', parseInt(input * 100) ,'cents');
   for (var i in result) {
     if(result[i]['amount'] > 0)
     console.log(result[i]['amount'] + ' ' + result[i]['name']);
