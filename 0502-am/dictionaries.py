@@ -43,3 +43,8 @@ print contory_specialities
 
 contory_specialities_dict = dict(contory_specialities)
 print contory_specialities_dict
+
+countries = ["Italy", "Germany", "Spain", "USA", "Switzerland"]
+dishes = ["pizza", "sauerkraut", "paella", "hamburger"]
+country_specialities = zip(countries,dishes)
+print country_specialities
