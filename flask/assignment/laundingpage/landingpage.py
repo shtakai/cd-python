@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET'])
 def index():
-    return render_template('static/index.html')
+    return render_template('static/index.html', phrase = "aaa",times=3)
 
 @app.route('/ninjas', methods = ['GET'])
 def ninjas():
