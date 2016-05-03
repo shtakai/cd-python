@@ -33,3 +33,13 @@ for key,data in capitals.items():
 print len(capitals)
 print cmp(capitals, weekend)
 
+
+
+dishes = ["pizza", "sauerkraut", "paella", "hamburger"]
+countries = ["Italy", "Germany", "Spain", "USA"]
+
+contory_specialities = zip(countries, dishes)
+print contory_specialities
+
+contory_specialities_dict = dict(contory_specialities)
+print contory_specialities_dict
