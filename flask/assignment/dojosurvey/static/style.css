@@ -1,0 +1,48 @@
+.container {
+  padding: 50px;
+  margin: 100px 100px;
+  border: 1px solid black;
+  width: 600px;
+}
+
+.text {
+  display: inline-block;
+}
+
+.text label {
+  width: 200px;
+}
+.text input {
+  width: 300px;
+}
+
+.textarea {
+  display: block;
+  // vertical-align: top;
+}
+
+.textarea label {
+  vertical-align: top;
+}
+
+input[type="submit"] {
+  border: 1px solid black;
+  background: #76A5AF;
+  color: white;
+  margin-left: 250px
+}
+
+h3 {
+  text-decoration: underline;
+}
+
+ul {
+  display: block;
+}
+
+li {
+  vertical-align: top;
+  list-style-type: none;
+  display: inline-block;
+  width: 40%;
+}
