@@ -8,21 +8,21 @@ app.secret_key = "hgrefjndsj43u32"
 @app.route('/', methods=['GET'])
 def index():
     if 'gold' not in session:
-        print 'create gold in session'
+        # print 'create gold in session'
         session['gold'] = 0
     if 'messages' not in session or session['messages'] == None:
-        print 'create messages in session'
+        # print 'create messages in session'
         session['messages'] = []
     gold = int(session['gold'])
     messages = session['messages']
-    print 'gold:', session['gold'],'messages:', session['messages']
+    # print 'gold:', session['gold'],'messages:', session['messages']
 
     return render_template('index.html')
 
 
 @app.route('/process_money', methods=['POST'])
 def process_money():
-    print 'process_money', request.form
+    # print 'process_money', request.form
     house_type = request.form['house_type']
     message_template = "Earn a {} and {} golds... {} ({})"
     say = ""
@@ -30,7 +30,7 @@ def process_money():
     tdatetime = dt.now()
     datetime = tdatetime.strftime('%Y/%m/%d %I:%M%p')
     # datetime = "11/11/11"
-    print 'house_type', house_type
+    # print 'house_type', house_type
     if house_type == 'farm':
         earn_gold = random.randint(10, 21)
     elif house_type == 'cave':
@@ -48,12 +48,12 @@ def process_money():
     else:
         ''' do nothing '''
         pass
-    print 'earn_gold:', earn_gold, 'house_type:', house_type, 'say:', say, 'datetime:', datetime, 'say_class:', say_class
+    # print 'earn_gold:', earn_gold, 'house_type:', house_type, 'say:', say, 'datetime:', datetime, 'say_class:', say_class
     message = message_template.format(earn_gold, house_type, say, datetime )
     session['gold'] = int(session['gold']) + earn_gold
 
     session['messages'].append({'message':message, 'class': say_class})
-    print 'gold:', session['gold'],'messages:', session['messages']
+    # print 'gold:', session['gold'],'messages:', session['messages']
 
     return redirect('/')
 
