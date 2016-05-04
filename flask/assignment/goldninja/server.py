@@ -38,13 +38,13 @@ def process_money():
     elif house_type == 'house':
         earn_gold = random.randint(2, 6)
     elif house_type == 'casino':
-        casino_win = random.randint(0,2)
-        if(casino_win is True):
+        casino_win = random.randint(-1,1)
+        if(casino_win > 0):
             earn_gold = random.randint(0, 51)
         else:
             earn_gold = -1 * random.randint(0, 51)
             say = "Ouch"
-            say_class = "ouchs"
+            say_class = "class=ouch"
     else:
         ''' do nothing '''
         pass

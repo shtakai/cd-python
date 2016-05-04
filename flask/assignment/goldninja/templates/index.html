@@ -55,7 +55,7 @@
         <h3>Activities</h3>
         <div class="messages">
           {% for message in session['messages'] %}
-            <p class="{{message['say_class']}}">{{message['message']}}</p>
+            <p {{message['class']}}>{{message['message']}}</p>
           {% endfor %}
         </div>
       </div>
