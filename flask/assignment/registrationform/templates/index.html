@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>registration form</h1>
+        <h5>TODO: regex for email is not completed, REVISE ka.</h5>
+        {{ get_flashed_messages() }}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h4 class="message">
+                        {{ message  }}
+                    </h4>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% if session['completed'] %}
+            <h3>Thanks for submitting your information.</h3>
+        {% else %}
+            <form action="/register" method="POST">
+                <div class="form-group">
+                </div>
+                    <label for="email">email</label>
+                    <input class="form-control" id="email" type="text" name="email" value="{{ session['email'] }}">
+                <div class="form-group">
+                </div>
+                    <label for="first_name">first name</label>
+                    <input class="form-control" type="text" id="first_name" name="first_name" value="{{ session['first_name'] }}">
+                <div class="form-group">
+                </div>
+                    <label for="last_name">last name</label>
+                    <input class="form-control" type="text" id="last_name" name="last_name" value="{{ session['last_name'] }}">
+                <div class="form-group">
+                </div>
+                    <label for="password">password</label>
+                    <input class="form-control" type="password" id="password" name="password" value="">
+                <div class="form-group">
+                </div>
+                    <label for="confirm_password">confirm password</label>
+                    <input class="form-control" type="password" id="confirm_password" name="confirm_password" value="">
+                <div class="form-group">
+                </div>
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
