@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Great Number Game</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+</head>
+<body>
+  <div class="container well">
+    <h2>Welcome to the Great Number Game!</h2>
+    <h3>I am thinking of a number between 1 and 100</h3>
+    <h3>Take a guess!</h3>
+    {% if guess_result == "WINNING" %}
+      <div class="result win">
+        <p>{{number}} was the number!</p>
+        <a href="/" class="btn btn-info">Play again</a>
+      </div>
+    {% elif guess_result == "LOW" %}
+      <div class="result low">
+        <p>too low</p>
+      </div>
+    {% elif guess_result == "HIGH" %}
+      <div class="result high">
+        <p>too high</p>
+      </div>
+    {% else %}
+      <div class="result not">
+        <p>please input INTEGER</p>
+      </div>
+    {% endif %}
+
+    {% if guess_result != "WINNING" %}
+      <form action="/" class="" method="post">
+        <input class="" type="text" name="guess" min="1" max="100">
+        <input type="submit" value="SUBMIT YOUR GUESS" class="btn btn-danger">
+      </form>
+    {% endif %}
+    {{session['number']}}
+    <!-- {{guess_result}} -->
+  </div>
+</body>
+</html>

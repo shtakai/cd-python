@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin:  100px 300px;
+  width: auto;
+  text-align: center;
+}
+
+.result{
+  width: 500px;
+  margin: 50px;
+  padding: 50px;
+  display: inline-block;
+
+}
+
+
+.win{
+
+  text-align: center;
+  background-color: green;
+  color: white;
+
+}
+
+.low, .high{
+
+  text-align: center;
+  background-color: darkred;
+  color: white;
+}
+
+.not {
+  text-align: center;
+  background-color: yellow;
+  color: black;
+}
+
+p {
+  vertical-align: center;
+}
