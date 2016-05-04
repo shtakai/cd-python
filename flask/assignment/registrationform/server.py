@@ -20,11 +20,11 @@ def register():
     messages = []
     for form_element in request.form:
         # check empty form_element
-        print request.form[form_element]
+        #print request.form[form_element]
         if form_element == "submit":
             continue
         if len(request.form[form_element]) < 1:
-            print "empty error"
+            #print "empty error"
             messages.append("{} cannot be empty.".format(form_element.capitalize()))
     for message in sorted(messages):
         flash(message)
@@ -46,7 +46,8 @@ def register():
     # check valid email address
     # TODO: revise the pattern  it isn't complete.
     email_pattern = "[^@]+@([^@]+\.)*\w+\.\w+"
-    print re.match(email_pattern, request.form['email'])
+    #print re.match(email_pattern, request.form['email'])
+
     if(not re.match(email_pattern, request.form['email'])):
         flash("Email should be a valid email")
         messages.append("email")
@@ -65,9 +66,7 @@ def register():
     # if form is completely good, set completed=True
     if len(messages) == 0:
         session['completed'] = "completed"
-        print 'completed'
-
-
+        #print 'completed'
 
     return redirect('/')
 
