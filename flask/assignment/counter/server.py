@@ -21,6 +21,12 @@ def add2():
     return render_template('index.html', count=session['count'])
 
 
+@app.route('/reset')
+def reset():
+    session['count'] = 0
+    return render_template('index.html', count=session['count'])
+
+
 @app.route('/show_counter')
 def show_counter():
     add_count(1)
