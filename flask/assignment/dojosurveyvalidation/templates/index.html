@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dojo Survey Index</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="static/style.css">
+  <script type="text/javascript" src="static/main.js"></script>
+</head>
+<body>
+  <div class="container">
+    <form action="process" method="post">
+      <div class="text">
+        <label class="" for="name">Your Name:</label>
+        <div class="">
+          <input class="" type="text" id="name" name="name">
+        </div>
+      </div>
+      <div class="option">
+        <label class="" for="location">Dojo Location:</label>
+        <select class="" id="location" name="location">
+          <option value="Seattle">Seattle</option>
+          <option value="Tokyo">Tokyo</option>
+          <option value="Bangkok">Bangkok</option>
+          <option value="Shanghai">Shanghai</option>
+        </select>
+      </div>
+      <div class="option">
+        <label class="" for="language">Dojo Location:</label>
+        <select class="" name="language">
+          <option value="Python">Python</option>
+          <option value="Perl">Perl</option>
+          <option value="Ada">Ada</option>
+          <option value="Ruby">Ruby</option>
+        </select>
+      </div>
+      <div class="textarea">
+        <label for="comment" class="">Comment(optional)</label>
+        <textarea class="" name="comment" ></textarea>
+      </div>
+      <div class="submit">
+        <input type="submit" value="Button">
+      </div>
+    </form>
+  </div>
+</body>
+</html>
