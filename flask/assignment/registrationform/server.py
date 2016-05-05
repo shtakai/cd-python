@@ -57,6 +57,14 @@ def register():
         flash("Password and Password Confirmation should match")
         messages.append("password")
 
+    # check password and confirm_password contain
+    # 1 more uppercase letter and numbers
+    password_pattern = "[0-9A-Z]+.*[0-9A-Z]"
+    if(not re.match(password_pattern, request.form['password'])):
+        flash("Password has at least ( more than 1 uppercase letters and more than 1 numbers )")
+        messages.append("passwordA-Z0-9")
+
+
     # set elements to sessions
     for form_element in request.form:
         if form_element == 'password' or form_element == 'confirm_password':
