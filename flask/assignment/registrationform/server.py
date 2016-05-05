@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, flash
 import re
+from datetime from datetime
 app = Flask(__name__)
 app.secret_key = "gersoijergjse"
 
@@ -51,6 +52,11 @@ def register():
     if(not re.match(email_pattern, request.form['email'])):
         flash("Email should be a valid email")
         messages.append("email")
+
+    # check the birthdate 1.PAST 2.validate date....
+    dt = DateTime.now()
+    print dt
+
 
     # check that password equals confirm_password
     if(request.form['password'] != request.form['confirm_password']):
