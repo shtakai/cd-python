@@ -43,5 +43,13 @@ def update(friend_id):
     return redirect('/')
 
 
+@app.route('/remove_friend/<friend_id>', methods=['POST'])
+def remove(friend_id):
+    query = "delete from friends where id = :id"
+    data = { 'id': friend_id }
+    mysql.query_db(query,data)
+    return redirect('/')
+
+
 app.run(debug=True)
 
