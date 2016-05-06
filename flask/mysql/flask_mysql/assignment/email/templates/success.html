@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success Page</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+        <div class="alert alert-success"><p class="text-center">The email address you entered ( {{ email }} ) is a VALID email address! Thank you!</p></div>
+
+        <div class="row panel panel-default">
+            <div class="panel-heading">
+                Email Addresses Entered:
+            </div>
+            <ul class="list-group">
+              {% for email in emails %}
+              <li class="list-group-item">
+                {{ email.email }}
+                {{ email.updated_at.strftime('%Y/%m/%d %I:%M %p') }}
+              </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
