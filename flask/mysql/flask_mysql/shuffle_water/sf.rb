@@ -10,6 +10,36 @@ end
 
 
 def fill_water(list)
+  base = list.min
+  pp base
+  list.each do |elem|
+    i = list.index(elem)
+    pp "index:#{i}, elem:#{elem}"
+    prev_list = list[(0...i)]
+    pp "prev_list:#{prev_list}"
+    prev_list = prev_list.size >= 0 ? prev_index = prev_list.select{|e| e > elem}.last : nil
+    if !prev_list.nil?
+      pp "prex:#{prev_list[prev_index]} -index:#{prev_index}" 
+    else
+      pp "prev is none"
+    end
+    next_list = list[(i+1..list.length-1)]
+    pp "next_liset:#{next_list}"
+    if next_list.size >= 0 
+      next_index = next_index.select{|e| e > elem}.first : nil
+    else
+      if !next_list.nil?
+      pp "next:#{next_list[next_index]} -index:#{next_index}"
+    else
+      pp "next is none"
+    end
+end
+
+
+
+end
+
+def fill_water2(list)
   #pp l
   first = list.max
   index_first= list.index(first)
@@ -23,7 +53,7 @@ def fill_water(list)
 end
 
 
-array = [1,2,3,4,5,6]
-#fill_water( shuffle(array))
+array = [1,3,2,4,6,5]
+#fill_water( shufle(array))
 fill_water( array)
 
