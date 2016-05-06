@@ -14,10 +14,26 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+              <a href="/">HOME</a>
             </div>
         </div>
-        <div class="alert alert-success"><p class="text-center">The email address you entered ( {{ email }} ) is a VALID email address! Thank you!</p></div>
-
+        {% if email %}
+          <div class="alert alert-success"><p class="text-center">The email address you entered ( {{ email }} ) is a VALID email address! Thank you!</p></div>
+        {% endif %}
+        {% if deleted %}
+          <div class="alert alert-success"><p class="text-center">{{ deleted }}</p></div>
+        {% endif %}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-danget">
+                <p class="text-center">
+                  {{ message }}
+                </p>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         <div class="row panel panel-default">
             <div class="panel-heading">
                 Email Addresses Entered:
@@ -25,8 +41,11 @@
             <ul class="list-group">
               {% for email in emails %}
               <li class="list-group-item">
-                {{ email.email }}
-                {{ email.updated_at.strftime('%Y/%m/%d %I:%M %p') }}
+                <form action="/delete_email/{{ email.id }}" method="POST">
+                  <input type="submit" value="DELETE" class="btn btn-primary">
+                  {{ email.email }}
+                  {{ email.updated_at.strftime('%Y/%m/%d %I:%M %p') }}
+                </form>
               </li>
               {% endfor %}
             </ul>

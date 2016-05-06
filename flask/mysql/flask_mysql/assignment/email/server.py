@@ -34,5 +34,25 @@ def create_email():
         print emails
         return render_template('success.html', email=email, emails=emails)
 
+
+@app.route('/delete_email/<id>', methods=["POST"])
+def remove_email(id):
+    deleted = ""
+    query = "select id from emails where id = :id"
+    data = {'id': id}
+    ids = mysql.query_db(query, data)
+    if(not ids):
+        flash("invalid id for deleting")
+    else:
+        query = "delete from emails where id = :id"
+        mysql.query_db(query, data)
+        deleted = "deleted id: {}".format(id)
+
+    query = "select * from emails"
+    emails = mysql.query_db(query, {})
+    print emails
+    return render_template('success.html', emails = emails, deleted=deleted)
+
+
 app.run(debug=True)
 
