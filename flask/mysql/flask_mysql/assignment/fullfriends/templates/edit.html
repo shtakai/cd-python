@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends</title>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>{{ title }} Friend</h2>
+    <form action="/friends{{ suffix }}" method="POST">
+      <input type="hidden" name="id" value="{{ friend.id }}">
+      <label for="first_name">
+        First Name:
+        <input type="text" name="first_name" id="first_name" value="{{ friend.first_name }}" placeholder="first name">
+      </label>
+      <label for="last_name">
+        Last Name:
+        <input type="text" name="last_name" id="last_name" value="{{ friend.last_name }}" placeholder="last name">
+      </label>
+      <label for="occupation">
+        Occupation:
+        <input type="text" name="occupation" id="occupation" value="{{ friend.occupation }}" placeholder="occupation">
+      </label>
+      <input type="submit" value="{{ title }}" class="btn btn-primary">
+    </form>
+  </div>
+</body>
+</html>
