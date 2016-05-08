@@ -12,15 +12,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>bcrypt</h1>
-    <h3>CREATE USER</h3>
-    <form action="/create_user" method="POST">
-      username:<input type="text" name="username">
-      email: <input type="text" name="email">
-      password:<input type="password" name="password">
-      <input type="submit" value="CREATE">
-    </form>
     <h3>LOGIN</h3>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <h4>{{ message }}</h4>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     <form action="/login" method="POST">
       email: <input type="text" name="email">
       password:<input type="password" name="password">

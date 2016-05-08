@@ -13,10 +13,18 @@
 <body>
   <div class="container">
     <h1>REGISTER</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <h4>{{ message }}</h4>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     <form action="/create_user" method="POST">
-      username:<input type="text" name="username">
-      email: <input type="text" name="email">
+      username:<input type="text" name="username" value="{{username}}">
+      email: <input type="text" name="email" value="{{email}}">
       password:<input type="password" name="password">
+      password confirmation:<input type="password" name="confirm_password">
       <input type="submit" value="CREATE">
     </form>
   </div>
