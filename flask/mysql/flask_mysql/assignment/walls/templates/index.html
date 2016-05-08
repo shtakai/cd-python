@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WALLS</title>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="nav navbar">
+      <div class="navbar-left"><h2>Codingdojo Wall</h2></div>
+      {% if session['username'] %}
+      <div class="navbar-right"><h2>Welcome {{ session['username'] }}</h2></div>
+      {% else %}
+        <div class="navbar-right">
+          <a href="/register_top" class="btn btn-primary">register now</a>
+          <a href="/login_top" class="btn btn-primary">login</a>
+        </div>
+      {% endif %}
+    </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger">
+          {% for message in messages %}
+            <h4>{{ message }}</h4>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <div class="row well">
+      <h2>Post a message</h2>
+      <form action="/create_post" method="POST">
+        <textarea id="message" name="message" cols="70" rows="4"></textarea>
+        <input type="submit" value="Post" class="btn btn-primary">
+      </form>
+      {% for post in posts%}
+          <div class="row">
+            <div class="alert alert-success">
+              <h4>{{ post.username }} - {{ post.created_at.strftime('%B %d %Y') }}</h4>
+              <p>{{ post.message }}</p>
+              <div>
+                <h5>Post a comment</h5>
+                <form action="/messages/{{ post.id }}/create_comment" method="POST">
+                  <textarea id="comment" name="comment" cols="30" rows="2"></textarea>
+                  <input type="submit" value="Comment" class="btn btn-primary">
+                </form>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
