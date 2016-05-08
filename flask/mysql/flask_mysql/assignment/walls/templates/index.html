@@ -44,6 +44,11 @@
               <h4>{{ post.username }} - {{ post.created_at.strftime('%B %d %Y') }}</h4>
               <p>{{ post.message }}</p>
               <div>
+                {% for comment in comments[post.id] %}
+                  <div class="alert alert-notice">
+                    {{ comment['comment'] }}
+                  </div>
+                {% endfor %}
                 <h5>Post a comment</h5>
                 <form action="/messages/{{ post.id }}/create_comment" method="POST">
                   <textarea id="comment" name="comment" cols="30" rows="2"></textarea>

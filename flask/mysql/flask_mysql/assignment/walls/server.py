@@ -14,8 +14,17 @@ def index():
     posts = {}
     posts_query = "select messages.message, messages.id, messages.user_id, messages.created_at, users.username from messages inner join users on messages.user_id = users.id order by messages.created_at desc"
     posts = mysql.query_db(posts_query,{});
-    print posts
-    return render_template('index.html', posts=posts)
+    # print posts
+    comments_hash = {}
+    for post in posts:
+        comments_query = "select * from comments where message_id = :message_id order by created_at desc"
+        comments_data = {'message_id': post['id']}
+        comments = mysql.query_db(comments_query, comments_data)
+        # print 'comments', comments
+        comments_hash[post['id']] = comments
+
+    print comments_hash
+    return render_template('index.html', posts=posts, comments=comments_hash)
 
 
 @app.route('/create_post', methods=['POST'])
