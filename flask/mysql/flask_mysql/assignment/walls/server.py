@@ -12,15 +12,14 @@ app.secret_key = "oerjtoidgeq3jg"
 def index():
     # find messages -> user,comment ->user
     posts = {}
-    posts_query = "select messages.message, messages.id, messages.user_id, messages.created_at, users.username from messages inner join users on messages.user_id = users.id order by messages.created_at desc"
+    posts_query = "select messages.message, messages.id, messages.user_id, messages.created_at, concat(users.first_name,' ', users.last_name) as username from messages inner join users on messages.user_id = users.id order by messages.created_at desc"
     posts = mysql.query_db(posts_query,{});
     comments_hash = {}
     for post in posts:
-        comments_query = "select * from comments where message_id = :message_id order by created_at desc"
+        comments_query = "select c.*, concat(u.first_name,' ',u.last_name )as username from comments as c inner join users as u on c.user_id = u.id  where c.message_id = :message_id order by c.created_at desc"
         comments_data = {'message_id': post['id']}
         comments = mysql.query_db(comments_query, comments_data)
         comments_hash[post['id']] = comments
-
     return render_template('index.html', posts=posts, comments=comments_hash)
 
 
@@ -90,14 +89,14 @@ def login_top():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    print 'logout'
     return redirect('/')
 
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
     email = request.form['email']
-    username = request.form['username']
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
     password = request.form['password']
     session['error'] = ""
 
@@ -105,6 +104,16 @@ def create_user():
     password_pattern = r"^[a-zA-Z0-9]{8}?"
     if(not re.match(email_pattern, request.form['email'])):
         messages = "Email is not valid!"
+        session['error'] += messages
+        flash(messages)
+
+    if(len(first_name) < 2):
+        messages = "First Name contains at least 2 letters"
+        session['error'] += messages
+        flash(messages)
+
+    if(len(last_name) < 2):
+        messages = "Last Name contains at least 2 letters"
         session['error'] += messages
         flash(messages)
 
@@ -119,15 +128,16 @@ def create_user():
         flash(messages)
 
     if session['error']:
-        return render_template('register.html', username=username, email=email)
+        return render_template('register.html', first_name=first_name, last_name=last_name, email=email)
 
     else:
         pw_hash = bcrypt.generate_password_hash(password)
-        insert_query = "insert into users (email, username, pw_hash, created_at) values (:email, :username, :pw_hash, NOW())"
-        query_data = { 'email': email, 'username': username, 'pw_hash': pw_hash}
+        insert_query = "insert into users (email, first_name, last_name, pw_hash, created_at, updated_at) values (:email, :first_name, :last_name, :pw_hash, NOW(), NOW())"
+        query_data = { 'email': email, 'first_name': first_name, 'last_name': last_name, 'pw_hash': pw_hash}
         mysql.query_db(insert_query, query_data)
         flash("Created user")
-        username = ""
+        first_name = ""
+        last_name = ""
         password = ""
         email = ""
 
@@ -144,7 +154,7 @@ def login():
     if( users and bcrypt.check_password_hash(users[0]['pw_hash'], password)):
         flash('login user')
         session['user'] = users[0]['id']
-        session['username'] = users[0]['username']
+        session['username'] = users[0]['first_name']+' '+users[0]['last_name']
     else:
         flash('email or password is wrong. please check')
 

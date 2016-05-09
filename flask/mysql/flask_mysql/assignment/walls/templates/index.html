@@ -35,33 +35,47 @@
         </div>
       {% endif %}
     {% endwith %}
-    <div class="row well">
-      <h2>Post a message</h2>
-      <form action="/create_post" method="POST">
-        <textarea id="message" name="message" cols="70" rows="4"></textarea>
-        <input type="submit" value="Post" class="btn btn-primary">
-      </form>
-      {% for post in posts%}
-          <div class="row">
-            <div class="alert alert-success">
-              <h4>{{ post.username }} - {{ post.created_at.strftime('%B %d %Y') }}</h4>
-              <p>{{ post.message }}</p>
-              <div>
-                {% for comment in comments[post.id] %}
-                  <div class="alert alert-notice">
-                    {{ comment['comment'] }}
-                  </div>
-                {% endfor %}
-                <h5>Post a comment</h5>
-                <form action="/messages/{{ post.id }}/create_comment" method="POST">
-                  <textarea id="comment" name="comment" cols="30" rows="2"></textarea>
-                  <input type="submit" value="Comment" class="btn btn-primary">
-                </form>
-              </div>
-            </div>
-          </div>
-      {% endfor %}
-    </div>
+		{% if session['username']%}
+			<div class="row well">
+				<h2>Post a message</h2>
+				<form action="/create_post" method="POST">
+					<textarea id="message" name="message" cols="70" rows="4"></textarea>
+					<input type="submit" value="Post" class="btn btn-primary">
+				</form>
+				{% for post in posts%}
+						<div class="row">
+							<div class="alert alert-success">
+								<h4>{{ post['username'] }} - {{ post['created_at'].strftime('%B %d %Y') }}</h4>
+								<p>{{ post['message'] }}</p>
+								<div>
+									{% for comment in comments[post.id] %}
+										<div class="alert alert-info">
+											<ul class="list-unstyled">
+												<li>
+													<strong>{{ comment['username'] }}</strong> {{ comment['created_at'].strftime('%B %d %Y') }}
+												</li>
+												<li>
+													<p>{{ comment['comment'] }}</p>
+												</li>
+											</ul>
+
+										</div>
+									{% endfor %}
+									<h5>Post a comment</h5>
+									<form action="/messages/{{ post.id }}/create_comment" method="POST">
+										<textarea id="comment" name="comment" cols="30" rows="2"></textarea>
+										<input type="submit" value="Comment" class="btn btn-primary">
+									</form>
+								</div>
+							</div>
+						</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="well">
+				<p>If you want to see messages, please login or register then login.</p>
+			</div>
+		{% endif %}
   </div>
 </body>
 </html>

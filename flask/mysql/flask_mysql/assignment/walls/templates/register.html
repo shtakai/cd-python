@@ -21,12 +21,28 @@
       {% endif %}
     {% endwith %}
     <form action="/create_user" method="POST">
-      first_name:<input type="text" name="first_name" value="{{first_name}}">
-      last_name:<input type="text" name="last_name" value="{{last_name}}">
-      email: <input type="text" name="email" value="{{email}}">
-      password:<input type="password" name="password">
-      password confirmation:<input type="password" name="confirm_password">
-      <input type="submit" value="CREATE">
+      <ul class="list-unstyled">
+        <li>
+          <label for="first_name">first_name:</label>
+          <input id="first_name" type="text" name="first_name" value="{{first_name}}">
+        </li>
+        <li>
+          <label for="last_name">last_name:</label>
+          <input id="last_name" type="text" name="last_name" value="{{last_name}}">
+        </li>
+        <li>
+          <label for="email">email:</label>
+          <input id="email" type="text" name="email" value="{{email}}">
+        </li>
+        <li>
+          <label for="password">password:</label>
+          <input id="password" type="password" name="password">
+        </li>
+        <li>
+          <label for="confirm_password">password confirmation:</label>
+          <input id="confirm_password" type="password" name="confirm_password">
+        </li>
+      <input type="submit" value="CREATE" class="btn btn-primary">
     </form>
   </div>
 </body>
