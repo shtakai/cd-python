@@ -1,8 +1,5 @@
 var fact = function (n) {
-  if (n == 1) {
-    return 1;
-  }
-  return n * fact(n-1)
+  return (n == 1) ? 1 : n * fact(n-1);
 }
 
 
