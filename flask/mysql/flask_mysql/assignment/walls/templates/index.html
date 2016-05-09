@@ -15,7 +15,10 @@
     <div class="nav navbar">
       <div class="navbar-left"><h2>Codingdojo Wall</h2></div>
       {% if session['username'] %}
-      <div class="navbar-right"><h2>Welcome {{ session['username'] }}</h2></div>
+				<div class="navbar-right">
+					<h2>Welcome {{ session['username'] }}</h2>
+					<a href="/logout" class="btn btn-primary">LOGOUT</a>
+				</div>
       {% else %}
         <div class="navbar-right">
           <a href="/register_top" class="btn btn-primary">register now</a>

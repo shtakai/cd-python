@@ -21,7 +21,8 @@
       {% endif %}
     {% endwith %}
     <form action="/create_user" method="POST">
-      username:<input type="text" name="username" value="{{username}}">
+      first_name:<input type="text" name="first_name" value="{{first_name}}">
+      last_name:<input type="text" name="last_name" value="{{last_name}}">
       email: <input type="text" name="email" value="{{email}}">
       password:<input type="password" name="password">
       password confirmation:<input type="password" name="confirm_password">

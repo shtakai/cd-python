@@ -87,6 +87,13 @@ def login_top():
     return render_template('login.html')
 
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    print 'logout'
+    return redirect('/')
+
+
 @app.route('/create_user', methods=['POST'])
 def create_user():
     email = request.form['email']
