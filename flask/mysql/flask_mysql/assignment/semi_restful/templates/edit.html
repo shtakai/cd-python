@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users Edit</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="nav navbar">
+      <div class="navbar-left"><h2>Edit User {{ user['id'] }}</h2></div>
+      <div class="navbar-right"><a href="/users" class="btn btn-primary">HOME</a></div>
+    </div>
+    <div>
+      <form action="/users/{{ user['id'] }}" method="POST">
+        <ul class="list-unstyled">
+          <li><label for="first_name">First Name:</label><input type="text" id="first_name" name="first_name" value="{{ user['first_name'] }}"></li>
+          <li><label for="last_name">Last Name:</label><input type="text" id="last_name" name="last_name" value="{{ user['last_name'] }}"></li>
+          <li><label for="email">Email:</label><input type="text" id="email" name="email" value="{{ user['email'] }}"></li>
+          <li><input type="submit" value="Update"></li>
+        </ul>
+      </form>
+    </div>
+    <div>
+      <ul class="list-inline">
+        <li><a href="/users/{{ user['id'] }}">Show</a></li>
+        <li><a href="/users">Go back</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
