@@ -29,6 +29,7 @@ class Human(object):
             return False
 
 
+
 class Point(object):
     def __init__(self, x = 0, y = 0):
         print "created a new point!"
@@ -50,10 +51,10 @@ class Test(object):
         print "this string was passed in: " + phrase
         self.phrase = phrase
 
-test1 = Test('Hello world')
-test2 = Test()
-print "test1 p" + test1.phrase
-print "test2 p" + test2.phrase
+# test1 = Test('Hello world')
+# test2 = Test()
+# print "test1 p" + test1.phrase
+# print "test2 p" + test2.phrase
 
-michaed = Human('CodingDojo')
-jimmy = Human('CodingNinjas')
+# michaed = Human('CodingDojo')
+# jimmy = Human('CodingNinjas')
