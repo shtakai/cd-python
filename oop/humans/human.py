@@ -10,7 +10,7 @@ class Human(object):
         self.stealth = 3
 
 
-    def touch(self):
+    def taunt(self):
         print "You want a piece of me?"
 
 
@@ -29,4 +29,31 @@ class Human(object):
             return False
 
 
+class Point(object):
+    def __init__(self, x = 0, y = 0):
+        print "created a new point!"
+        self.x = x
+        self.y = y
+    def distance(self):
+        return (self.x**2 + self.y**2)**0.5
 
+
+class Cat(object):
+    def __init__(self, color, type, age):
+        self.color = color
+        self.type = type
+        self.age = age
+
+
+class Test(object):
+    def __init__(self, phrase='Nothing was passed'):
+        print "this string was passed in: " + phrase
+        self.phrase = phrase
+
+test1 = Test('Hello world')
+test2 = Test()
+print "test1 p" + test1.phrase
+print "test2 p" + test2.phrase
+
+michaed = Human('CodingDojo')
+jimmy = Human('CodingNinjas')
