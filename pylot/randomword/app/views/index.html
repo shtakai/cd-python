@@ -11,16 +11,21 @@
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <title>Welcome</title>
+  <title>Random Word</title>
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-12 well text-center">
-        The current time and date:
+        Random Word (attempt #{{ session['attempts'] }})
       </div>
       <div class="col-md-12 well text-center">
-        {{ welcome.mydate }}
+        {{ session['random_word'] }}
+      </div>
+      <div class="col-md-12">
+        <form action="/random_word" method="GET">
+          <input type="submit" class="btn btn-primary" value="Generate">
+        </form>
       </div>
     </div>
   </div>

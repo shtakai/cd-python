@@ -9,10 +9,12 @@
 from system.core.controller import *
 from time import strftime
 import datetime
+import string
+import random
 
-class Welcome(Controller):
+class Randomword(Controller):
     def __init__(self, action):
-        super(Welcome, self).__init__(action)
+        super(Randomword, self).__init__(action)
         """
             This is an example of loading a model.
             Every controller has access to the load_model method.
@@ -26,7 +28,21 @@ class Welcome(Controller):
         A loaded model is accessible through the models attribute
         self.models['WelcomeModel'].get_all_users()
         """
-        welcome = {
-                'mydate': datetime.datetime.now().strftime('%b %d,%Y %I:%m %p')
-                }
-        return self.load_view('index.html',welcome=welcome)
+        return self.load_view('index.html')
+
+    def get_random_string(self):
+        """
+         get random word
+        """
+        if not session.get('attempts'):
+            session['attempts'] = 1
+        else:
+            session['attempts'] += 1
+
+        random_word = ''
+        for i in range(0,14):
+            random_word += random.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                )
+        session['random_word'] = random_word
+        return redirect('/')
+
