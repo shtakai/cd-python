@@ -7,6 +7,8 @@
     Create a controller using this template
 """
 from system.core.controller import *
+from time import strftime
+import datetime
 
 class Welcome(Controller):
     def __init__(self, action):
@@ -24,4 +26,7 @@ class Welcome(Controller):
         A loaded model is accessible through the models attribute
         self.models['WelcomeModel'].get_all_users()
         """
-        return self.load_view('index.html')
+        welcome = {
+                'mydate': datetime.datetime.now().strftime('%b %d,%Y %I:%m %p')
+                }
+        return self.load_view('index.html',welcome=welcome)

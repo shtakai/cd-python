@@ -1,21 +1,28 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-  </head>
-  <body>
-    <form action = "/create_course" method = "POST">
-      <input type = "text" name = "Title">
-      <input type = "text" name = "Description">
-      <input type = "hidden" name = "this_is_hidden" value = "{{courses[0]['id']}}">
-      <input type = "submit" value = "new course">
-    </form>
-    <div>
-      {% for course in courses%}
-      {{course['Title']}}</br>
-      {{course['Description']}}
-      <a href = "/destroy/{{course['id']}}"> <button>DELETE???</button></a>
-      {%endfor%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <title>Welcome</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 well text-center">
+        The current time and date:
+      </div>
+      <div class="col-md-12 well text-center">
+        {{ welcome.mydate }}
+      </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
