@@ -1,0 +1,17 @@
+{
+  "name": "009_wall",
+  "homepage": "https://github.com/MikeHannon/pylot",
+  "authors": [
+    "Mike Hannon <mjhannon@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

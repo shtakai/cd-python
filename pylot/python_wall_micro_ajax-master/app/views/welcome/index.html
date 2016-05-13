@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+    <script src = "/static/bower_components/jquery/dist/jquery.js"></script>
+    <script>
+    $(document).ready(function(){
+      console.log('ready!');
+      $(document).on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+          url:'/messages_ajax',
+          method: 'POST',
+          success: function(data){
+            $('#wall').html(data);
+            $('#log_reg').html("");
+          }
+        }
+        )
+        return false;
+      })
+
+      $.ajax({
+        url:'/index_ajax',
+        method:'GET',
+        success:function(data){
+          $('#log_reg').html(data);
+        }
+      })
+    })
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to the Wall</h1>
+    </header>
+    <main>
+      <div id = "log_reg"></div>
+      <div id = "wall"></div>
+    </main>
+  </body>
+</html>

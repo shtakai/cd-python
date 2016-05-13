@@ -1,31 +1,17 @@
-"""
-    Routes Configuration File
-
-    Put Routing rules here
-"""
 from system.core.router import routes
 
-"""
-    This is where you define routes
+routes['default_controller'] = 'Welcomes'
+routes['POST']['/login'] = 'Welcomes#login'
+routes['POST']['/register'] = 'Welcomes#register'
+routes['GET']['/messages'] ='Welcomes#messages_index'
+routes['POST']['/messages_ajax'] ='Welcomes#messages_ajax'
+routes['GET']['/index_ajax'] ='Welcomes#newusersajax'
 
-    Start by defining the default controller
-    Pylot will look for the index method in the default controller to handle the base route
 
-    Pylot will also automatically generate routes that resemble: '/controller/method/parameters'
-    For example if you had a products controller with an add method that took one parameter
-    named id the automatically generated url would be '/products/add/<id>'
-    The automatically generated routes respond to all of the http verbs (GET, POST, PUT, PATCH, DELETE)
-"""
-routes['default_controller'] = 'Walls'
-routes['POST']['/login'] = 'Walls#login'
-routes['POST']['/register'] = 'Walls#register'
 
-# routes['GET']['/random_word'] = 'Randomword#get_random_string'
-# routes['default_controller'] = 'Courses'
-# routes['GET']['/destroy/<id>'] = 'Courses#destroy_confirm'
-# routes['GET']['/yes_delete/<id>'] = 'Courses#delete'
-# routes['GET']['/return'] = 'Courses#index'
-# routes['POST']['/create_course'] = 'Courses#create'
+
+
+
 """
     You can add routes and specify their handlers as follows:
 

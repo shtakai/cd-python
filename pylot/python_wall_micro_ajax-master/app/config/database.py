@@ -2,6 +2,8 @@
     Database Specific Configuration File
 """
 """ Put Generic Database Configurations here """
+import os
+
 class DBConfig(object):
     """ DB_ON must be True to use the DB! """
     DB_ON = True
@@ -24,7 +26,7 @@ class DevelopmentDBConfig(DBConfig):
 class StagingDBConfig(DBConfig):
     DB_USERNAME = 'root'
     DB_PASSWORD = 'root'
-    DB_DATABASE_NAME = 'friendsdb'
+    DB_DATABASE_NAME = 'mydb'
     DB_HOST = 'localhost'
 
 """ Put Production Specific Configurations here """

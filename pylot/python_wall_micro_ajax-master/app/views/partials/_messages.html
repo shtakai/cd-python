@@ -1,0 +1,22 @@
+<form action="/messages" method ="POST">
+  <textarea name="message" cols="30" rows="10"></textarea>
+  <input type="submit" value = "Add Message">
+</form>
+{% for message in messages %}
+{{message['m_id']}}
+{{message['message']}}
+{{message['m_c_at'] | customDate}}
+{{message['m_author']}}
+  {% for comment in comments %}
+    {% if comment['m_id'] == message['m_id'] %}
+      {{comment['comment']}}
+      {{comment['c_author']}}
+      {{comment['c_c_at'] | customDate}}
+    {% endif %}
+  {% endfor %}
+  <form action="/comments" method = 'POST'>
+    <textarea name="comment" rows="8" cols="40"></textarea>
+    <input type="hidden" name = "messages_id" value = "{{message['m_id']}}">
+    <input type="submit" value = "Add Comment">
+  </form>
+{% endfor %}

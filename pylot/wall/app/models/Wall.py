@@ -12,16 +12,48 @@ from system.core.model import Model
 class Wall(Model):
     def __init__(self):
         super(Wall, self).__init__()
-    """
-    Below is an example of a model method that queries the database for all users in a fictitious application
+
 
     def get_all_users(self):
-        print self.db.query_db("SELECT * FROM users")
+        print self.db.query_db("select * from users")
 
-    Every model has access to the "self.db.query_db" method which allows you to interact with the database
-    """
+    def login(self, req):
+        print 'login'
+        query = 'select * from users where email = ":email" limit 1'
+        value = {
+                'email': req['email'],
+                }
+        try:
+            tmp_user = self.db.query_db(query, value)
+            if self.bcrypt.check_password_hash(tmp_user[0]['pw_hash'], req['password']):
+                return (tmp_user[0]['id'], tmp_user[0]['first_name'] + ' ' + tmp_user[0]['last_name'])
+            else:
+                return False
+        except:
+            return False
 
-    """
-    If you have enabled the ORM you have access to typical ORM style methods.
-    See the SQLAlchemy Documentation for more information on what types of commands you can run.
-    """
+    def register(self, req):
+        messages = []
+        for k, v in req.items():
+            if len(v) == 0:
+                messages.append(k,"is mandatory")
+
+        # print self.db.query_db("select * from users")
+
+        query = "insert into users (first_name, last_name, email, pw_hash, created_at, updated_at) VALUES (':first name', ':last name', ':email', ':password', NOW(),NOW())"
+        # query = 'insert into users (first_name, last_name, email, pw_hash,  created_at, updated_at) values (":first_name", ":last_name", ":email", ":password", NOW(),NOW())'
+        values = {
+                'first_name': req['first_name'],
+                'last_name': req['last_name'],
+                'email': req['email'],
+                'password': self.bcrypt.generate_password_hash(req['password'])
+                }
+        print "query", query
+        print "value", values
+
+        user = self.db.query_db(query, values)
+        print "user", user
+        try:
+            return (user[0]['id'], user[0]['first_name'], user[0]['last_name'])
+        except:
+            return False
