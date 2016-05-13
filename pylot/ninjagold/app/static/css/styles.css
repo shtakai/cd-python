@@ -1,3 +1,16 @@
 * {
   font-family: monaco;
 }
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.activities {
+  height: 200px;
+  overflow: scroll;
+}

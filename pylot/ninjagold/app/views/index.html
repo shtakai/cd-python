@@ -5,7 +5,7 @@
   <title>Gold 金Ninj忍 A者</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+  <link rel="stylesheet" type="text/css" href="static/css/styles.css">
 </head>
 <body>
   <div class="container">
@@ -51,11 +51,11 @@
       </div>
     </div>
     <div class="footer">
-      <div class="activities">
+      <div>
         <h3>Activities</h3>
-        <div class="messages">
-          {% for message in session['messages'] %}
-            <p {{message['class']}}>{{message['message']}}</p>
+        <div class="activities well">
+          {% for activity in session['activities'] %}
+          <p class="{{ activity['class'] }}">{{ activity['activity'] }}</p>
           {% endfor %}
         </div>
       </div>
