@@ -29,13 +29,18 @@ class Walls(Controller):
         if not session.get('user'):
             return self.load_view('login.html')
 
-        return self.load_view('index.html')
+        messages = self.models['Wall'].get_messages()
+        print messages
+
+        return self.load_view('index.html', messages=messages)
 
     def login(self):
         print request.form
         user = self.models['Wall'].login(request.form)
         if user:
             session['user'] = user[1]
+            session['user_id'] = user[0]
+            print session['user']
             return redirect('/')
         else:
             flash("login failed")
@@ -46,8 +51,20 @@ class Walls(Controller):
         user = self.models['Wall'].register(request.form)
         print user
         if user:
-            print 'register succeed'
+            flash ('register succeed')
         else:
-            print 'register failed'
+            flash ('register failed')
 
         return self.load_view('login.html')
+
+    def post_message(self):
+        print request.form
+        result = self.models['Wall'].post_message(request.form,user_id=session['user_id'])
+        flash('posted message')
+        return redirect('/')
+
+    def post_comment(self):
+        print request.form
+        result = self.models['Wall'].post_comment(request.form,user_id=session['user_id'])
+        flash('posted comment')
+        return redirect('/')

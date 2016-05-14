@@ -15,11 +15,30 @@
 </head>
 <body>
   <div class="container">
+    <div class="navbar">{{ session['user'] }}</div>
     <div class="row">
       <div class="col-md-12 well text-center">
+        <div class="div">
+          <form action="/post_message" method="POST">
+            <textarea id="message" name="message" cols="30" rows="3"></textarea>
+            <input type="submit" value="Post Message" class="btn btn-primary">
+          </form>
+        </div>
       </div>
+      {% for message in messages%}
       <div class="col-md-12 well text-center">
+        {{ message['created_at'] }}
+        {{ message['message'] }}
+        {{ message['user_id'] }}
+        <div class="alert alert-info">
+          <form action="/post_comment" method="POST">
+            <input type="hidden" name="message_id" value="{{ message['id'] }}">
+            <textarea id="comment" name="comment" cols="30" rows="3"></textarea>
+            <input type="submit" value="Post Message" class="btn btn-primary">
+          </form>
+        </div>
       </div>
+      {% endfor %}
       <div class="col-md-12">
       </div>
     </div>

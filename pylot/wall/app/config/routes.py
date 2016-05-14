@@ -19,6 +19,8 @@ from system.core.router import routes
 routes['default_controller'] = 'Walls'
 routes['POST']['/login'] = 'Walls#login'
 routes['POST']['/register'] = 'Walls#register'
+routes['POST']['/post_message'] = 'Walls#post_message'
+routes['POST']['/post_comment'] = 'Walls#post_comment'
 
 # routes['GET']['/random_word'] = 'Randomword#get_random_string'
 # routes['default_controller'] = 'Courses'
