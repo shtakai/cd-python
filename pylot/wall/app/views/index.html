@@ -1,47 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <title>Walls</title>
-</head>
-<body>
-  <div class="container">
-    <div class="navbar">{{ session['user'] }}</div>
-    <div class="row">
-      <div class="col-md-12 well text-center">
-        <div class="div">
-          <form action="/post_message" method="POST">
-            <textarea id="message" name="message" cols="30" rows="3"></textarea>
-            <input type="submit" value="Post Message" class="btn btn-primary">
-          </form>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title>Walls</title>
+  </head>
+  <body>
+    <div class="container">
+
+      <nav class="nav navbar">
+        <div class="navbar-left">
+          {{ session['user'] }}
         </div>
-      </div>
-      {% for message in messages%}
-      <div class="col-md-12 well text-center">
-        {{ message['created_at'] }}
-        {{ message['message'] }}
-        {{ message['user_id'] }}
-        <div class="alert alert-info">
-          <form action="/post_comment" method="POST">
-            <input type="hidden" name="message_id" value="{{ message['id'] }}">
-            <textarea id="comment" name="comment" cols="30" rows="3"></textarea>
-            <input type="submit" value="Post Message" class="btn btn-primary">
-          </form>
+        <div class="navbar-right">
+          <a href="/logout" class="btn btn-primary">LOGOUT</a>
         </div>
-      </div>
-      {% endfor %}
-      <div class="col-md-12">
+      </nav>
+
+      <div class="row">
+        <div class="col-md-12 well text-center">
+          <div class="div">
+            <form action="/post_message" method="POST">
+              <textarea id="message" name="message" cols="30" rows="3"></textarea>
+              <input type="submit" value="Post Message" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+        {% for message in messages%}
+        <div class="col-md-12 well text-center">
+          <div>
+            <ul class="list-inline">
+              <li>
+                {{ message['message']['first_name']}} {{message['message']['last_name'] }}
+              </li>
+              {{ message['message']['created_at'] }}
+            </ul>
+            {{ message['message']['message'] }}
+          </div>
+          {% if message['comments'] %}
+          <div class="alert alert-info">
+            Comments
+          </div>
+          {% endif %}
+          {% for comment in message['comments'] %}
+          <div>
+            <ul class="list-inline">
+              <li>
+                {{ comment['first_name'] }} {{ comment['last_name'] }}
+              </li>
+              <li>
+                {{ comment['created_at'] }}
+              </li>
+            </ul>
+            {{ comment['comment'] }}
+          </div>
+          {% endfor %}
+          <div class="alert alert-info">
+            <form action="/post_comment" method="POST">
+              <input type="hidden" name="message_id" value="{{ message['id'] }}">
+              <textarea id="comment" name="comment" cols="30" rows="3"></textarea>
+              <input type="submit" value="Post Message" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="col-md-12">
+        </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

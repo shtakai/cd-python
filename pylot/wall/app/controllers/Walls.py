@@ -30,7 +30,7 @@ class Walls(Controller):
             return self.load_view('login.html')
 
         messages = self.models['Wall'].get_messages()
-        print messages
+        # print messages
 
         return self.load_view('index.html', messages=messages)
 
@@ -45,6 +45,10 @@ class Walls(Controller):
         else:
             flash("login failed")
             return self.load_view('login.html')
+
+    def logout(self):
+        session.clear()
+        return redirect('/')
 
     def register(self):
         print request.form
