@@ -65,7 +65,7 @@
           {% endfor %}
           <div class="alert alert-info">
             <form action="/post_comment" method="POST">
-              <input type="hidden" name="message_id" value="{{ message['id'] }}">
+              <input type="hidden" name="message_id" value="{{ message['message']['id'] }}">
               <textarea id="comment" name="comment" cols="30" rows="3"></textarea>
               <input type="submit" value="Post Message" class="btn btn-primary">
             </form>
