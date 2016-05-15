@@ -11,55 +11,46 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <title>Semi Restful</title>
+    <title>Dashboard</title>
   </head>
   <body>
+    <nav class="navbar navbar-inverse navber-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+        </div>
+
+
+      </div>
+      <div class="navbar-left">
+        Test App
+        Home
+      </div>
+      <div class="navbar-right">
+        <!--<a href="/products/new" class="btn btn-primary">Add new product</a>-->
+      </div>
+    </nav>
+    <div class="jumbotron">
+      <div class="container">
+        <h3>Welcome to the Test</h3>
+        <p>We are going to build a cool application using a MVC framework!</p>
+        <p>This application was built with Sashimi folks</p>
+        <a href="#" class="btn btn-primary">Start</a>
+      </div>
+    </div>
     <div class="container">
-
-      <nav class="nav navbar">
-        <div class="navbar-left">
-          Semi Restful
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Manage Users</h4>
+          <p>Using this application, you'll learn how to add, remove and edit users for the application.</p>
         </div>
-        <div class="navbar-right">
-          <a href="/products/new" class="btn btn-primary">Add new product</a>
+        <div class="col-md-4">
+          <h4>Leave messages</h4>
+          <p>Users will be able to leave a message to another user using this application.</p>
         </div>
-      </nav>
-
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      {% for message in messages %}
-      <h4>{{ message }}</h4>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for product in products %}
-          <tr>
-            <td>{{ product['name'] }}</td>
-            <td>{{ product['description'] }}</td>
-            <td>{{ product['price'] }}</td>
-            <td>
-              <form action="/products/destroy" method="POST">
-                <input type="hidden" name="id" value="{{ product['id'] }}">
-                <a href="/products/show/{{ product['id'] }}" class="btn btn-primary">Show</a>
-                <a href="/products/edit/{{ product['id'] }}" class="btn btn-primary">Edit</a>
-                <input type="submit" value="Remove" class="btn btn-danger">
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <div class="col-md-12">
+        <div class="col-md-4">
+        <h4>Edit User Information</h4>
+        <p>Admins will be able to edit another user's information (email address, first name, last name, etc)</p>
+        </div>
       </div>
     </div>
   </body>

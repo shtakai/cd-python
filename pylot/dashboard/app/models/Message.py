@@ -10,83 +10,83 @@
 from system.core.model import Model
 import re
 
-class Product(Model):
+class Message(Model):
     def __init__(self):
-        super(Product, self).__init__()
+        super(Message, self).__init__()
 
 
-    def get_products(self):
-        query = "select * from products order by updated_at desc"
+    def get_messages(self):
+        query = "select * from messages order by updated_at desc"
         values = {}
-        products = self.db.query_db(query, values)
+        messages = self.db.query_db(query, values)
         return {
                 'status': True,
-                'products': products
+                'messages': messages
                 }
 
 
-    def create_product(self, req):
+    def create_message(self, req):
         number_pattern = r"^\d+$"
         if not re.match(number_pattern, req['price']):
             return {
                     'status': False,
                     'messages': ["Price must be number"]
                     }
-        query = "insert into products (name, description, price, created_at, updated_at) values (:name, :description, :price, NOW(), NOW())"
+        query = "insert into messages (name, description, price, created_at, updated_at) values (:name, :description, :price, NOW(), NOW())"
         values = {
                 'name': req['name'],
                 'description': req['description'],
                 'price': req['price']
                 }
-        product = self.db.query_db(query, values)
+        message = self.db.query_db(query, values)
         result = {
                 'status': True,
-                'product': product
+                'message': message
                 }
         return result
 
-    def get_product(self, id):
-        query = "select * from products where id = :id limit 1"
+    def get_message(self, id):
+        query = "select * from messages where id = :id limit 1"
         values = {
                 'id': id
                 }
-        product = self.db.query_db(query, values)
+        message = self.db.query_db(query, values)
         result = {
                 'status': True,
-                'product': product[0]
+                'message': message[0]
                 }
         return result
 
-    def update_product(self, id, req):
+    def update_message(self, id, req):
         number_pattern = r"^\d+$"
         if not re.match(number_pattern, req['price']):
             return {
                     'status': False,
                     'messages': ["Price must be number"]
                     }
-        query = "update products set name=:name, description = :description, price = :price, updated_at = NOW() where id = :id"
+        query = "update messages set name=:name, description = :description, price = :price, updated_at = NOW() where id = :id"
         values = {
                 'id': id,
                 'name': req['name'],
                 'description': req['description'],
                 'price': req['price']
                 }
-        product = self.db.query_db(query, values)
+        message = self.db.query_db(query, values)
         result = {
                 'status': True,
-                'product': product
+                'message': message
                 }
-        return product
+        return message
 
-    def destroy_product(self, req):
-        query = "delete from products where id = :id"
+    def destroy_message(self, req):
+        query = "delete from messages where id = :id"
         values = {
                 'id': req['id']
                 }
-        product = self.db.query_db(query, values)
+        message = self.db.query_db(query, values)
         result = {
                 'status': True,
-                'product': product
+                'message': message
                 }
-        return product
+        return message
 
