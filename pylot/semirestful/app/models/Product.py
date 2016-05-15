@@ -26,31 +26,67 @@ class Product(Model):
 
 
     def create_product(self, req):
-        pass
+        number_pattern = r"^\d+$"
+        if not re.match(number_pattern, req['price']):
+            return {
+                    'status': False,
+                    'messages': ["Price must be number"]
+                    }
+        query = "insert into products (name, description, price, created_at, updated_at) values (:name, :description, :price, NOW(), NOW())"
+        values = {
+                'name': req['name'],
+                'description': req['description'],
+                'price': req['price']
+                }
+        product = self.db.query_db(query, values)
+        result = {
+                'status': True,
+                'product': product
+                }
+        return result
 
-    def get_product(self, id, req):
-        pass
+    def get_product(self, id):
+        query = "select * from products where id = :id limit 1"
+        values = {
+                'id': id
+                }
+        product = self.db.query_db(query, values)
+        result = {
+                'status': True,
+                'product': product[0]
+                }
+        return result
 
     def update_product(self, id, req):
-        pass
+        number_pattern = r"^\d+$"
+        if not re.match(number_pattern, req['price']):
+            return {
+                    'status': False,
+                    'messages': ["Price must be number"]
+                    }
+        query = "update products set name=:name, description = :description, price = :price, updated_at = NOW() where id = :id"
+        values = {
+                'id': id,
+                'name': req['name'],
+                'description': req['description'],
+                'price': req['price']
+                }
+        product = self.db.query_db(query, values)
+        result = {
+                'status': True,
+                'product': product
+                }
+        return product
 
     def destroy_product(self, req):
-        pass
-
-
-
-    # def post_comment(self, req, user_id):
-        # query = "insert into comments (comment, user_id, message_id, created_at, updated_at) values (:comment, :user_id, :message_id, NOW(), NOW())"
-        # values = {
-                # 'comment' : req['comment'],
-                # 'user_id' : user_id,
-                # 'message_id': req['message_id']
-                # }
-        # result = self.db.query_db(query, values)
-
-        # return {
-            # 'status': True,
-            # 'result': result
-            # }
-
+        query = "delete from products where id = :id"
+        values = {
+                'id': req['id']
+                }
+        product = self.db.query_db(query, values)
+        result = {
+                'status': True,
+                'product': product
+                }
+        return product
 

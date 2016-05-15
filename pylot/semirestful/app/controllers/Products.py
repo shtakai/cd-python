@@ -35,49 +35,38 @@ class Products(Controller):
         return self.load_view('new.html')
 
     def create(self):
-        pass
+        result = self.models['Product'].create_product(request.form)
+        if not result['status']:
+            for message in result['messages']:
+                flash(message)
+        else:
+            flash('Created Product')
+        return redirect('/')
 
     def show(self, id):
-        pass
+        result = self.models['Product'].get_product(id)
+        return self.load_view('show.html', product=result['product'])
 
     def edit(self, id):
-        pass
+
+        result = self.models['Product'].get_product(id)
+        return self.load_view('edit.html', product=result['product'])
 
     def update(self, id):
-        pass
+        result = self.models['Product'].update_product(id, request.form)
+        if not result['status']:
+            for message in result['messages']:
+                flash(message)
+        else:
+            flash('Updated Product')
+        return redirect('/')
+
 
     def destroy(self):
-        pass
+        result = self.models['Product'].destroy_product(request.form)
+        flash('Removed Product Successfully')
+        return redirect('/')
 
 
 
 
-    # def login(self):
-        # result = self.models['Wall'].login(request.form)
-        # if result['status']:
-            # session['user'] = result['user']
-            # session['user_id'] = result['user_id']
-            # return redirect('/')
-        # else:
-            # flash("login failed")
-            # return self.load_view('login.html')
-
-    # def logout(self):
-        # session.clear()
-        # return redirect('/')
-
-    # def register(self):
-        # result = self.models['Wall'].register(request.form)
-        # for message in result['message']:
-            # flash(message)
-        # return self.load_view('login.html')
-
-    # def post_message(self):
-        # result = self.models['Wall'].post_message(request.form,user_id=session['user_id'])
-        # flash('posted message')
-        # return redirect('/')
-
-    # def post_comment(self):
-        # result = self.models['Wall'].post_comment(request.form,user_id=session['user_id'])
-        # flash('posted comment')
-        # return redirect('/')
