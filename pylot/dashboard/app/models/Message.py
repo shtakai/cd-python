@@ -15,9 +15,11 @@ class Message(Model):
         super(Message, self).__init__()
 
 
-    def get_messages(self):
-        query = "select * from messages order by updated_at desc"
-        values = {}
+    def get_messages(self, target_user_id):
+        query = "select messages.*, authors.id as author_id, authors.first_name as author_first_name, authors.last_name as author_last_name from messages inner join users as authors on messages.author_id = authors.id where messages.user_id = :user_id order by messages.updated_at desc"
+        values = {
+                'user_id': target_user_id
+                }
         messages = self.db.query_db(query, values)
         return {
                 'status': True,
@@ -25,68 +27,20 @@ class Message(Model):
                 }
 
 
-    def create_message(self, req):
-        number_pattern = r"^\d+$"
-        if not re.match(number_pattern, req['price']):
-            return {
-                    'status': False,
-                    'messages': ["Price must be number"]
-                    }
-        query = "insert into messages (name, description, price, created_at, updated_at) values (:name, :description, :price, NOW(), NOW())"
+    def create(self, req, author_user_id):
+        print 'model message create start'
+        # query = "select * from messages where user_id = :user_id order by updated_at desc"
+        query = "insert into messages (user_id, author_id, message, created_at, updated_at) values (:target_user_id, :author_id, :message, NOW(), NOW())"
         values = {
-                'name': req['name'],
-                'description': req['description'],
-                'price': req['price']
+                'target_user_id': req['target_user_id'],
+                'author_id': author_user_id,
+                'message': req['message']
                 }
-        message = self.db.query_db(query, values)
-        result = {
-                'status': True,
-                'message': message
-                }
-        return result
+        result = self.db.query_db(query, values)
+        print 'result===', result
 
-    def get_message(self, id):
-        query = "select * from messages where id = :id limit 1"
-        values = {
-                'id': id
-                }
-        message = self.db.query_db(query, values)
-        result = {
+        return {
                 'status': True,
-                'message': message[0]
+                'messages': result
                 }
-        return result
-
-    def update_message(self, id, req):
-        number_pattern = r"^\d+$"
-        if not re.match(number_pattern, req['price']):
-            return {
-                    'status': False,
-                    'messages': ["Price must be number"]
-                    }
-        query = "update messages set name=:name, description = :description, price = :price, updated_at = NOW() where id = :id"
-        values = {
-                'id': id,
-                'name': req['name'],
-                'description': req['description'],
-                'price': req['price']
-                }
-        message = self.db.query_db(query, values)
-        result = {
-                'status': True,
-                'message': message
-                }
-        return message
-
-    def destroy_message(self, req):
-        query = "delete from messages where id = :id"
-        values = {
-                'id': req['id']
-                }
-        message = self.db.query_db(query, values)
-        result = {
-                'status': True,
-                'message': message
-                }
-        return message
 

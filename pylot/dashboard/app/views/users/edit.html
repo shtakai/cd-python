@@ -40,20 +40,28 @@
       {% endif %}
       {% endwith %}
       <div class="row col-md-6">
-        <form action="/users/update_user" method="POST">
+        {{ user }}
+        <form action="/users/update_user_admin" method="POST">
           <input type="hidden" name="id" value="{{ user['id'] }}">
           <ul class="list-unstyled">
             <li>
-              <label for="email">email:</label><input id="email" type="text" name="email" value="{{ email }}">
+              <label for="email">email:</label><input id="email" type="text" name="email" value="{{ user['email'] }}">
             </li>
             <li>
-              <label for="email">first name:</label><input id="first_name" type="text" name="first_name" value="{{ first_name }}">
+              <label for="first_name">first name:</label><input id="first_name" type="text" name="first_name" value="{{ user['first_name'] }}">
             </li>
             <li>
-              <label for="email">last name:</label><input id="last_name" type="text" name="last_name" value="{{ last_name }}">
+              <label for="last_name">last name:</label><input id="last_name" type="text" name="last_name" value="{{ user['last_name'] }}">
             </li>
             <li>
-              <label for="description">description:</label><input id="description" type="text" name="description" value="{{ description }}">
+              <label for="description">description:</label><input id="description" type="text" name="description" value="{{ user['description'] }}">
+            </li>
+            <li>
+              <label for="user_level">User level:</label>
+              <select id="user_level" name="user_level" class="form-control">
+                <option value="1" {{ selected_normal }}>Normal</option>
+                <option value="9" {{ selected_admin }}>Admin</option>
+              </select>
             </li>
             <li>
               <input type="submit" value="Change User Info" class="btn btn-primary">
@@ -63,7 +71,7 @@
 
       </div>
       <div class="row col-md-6">
-        <form action="/users/update_password" method="POST">
+        <form action="/users/update_password_admin" method="POST">
           <input type="hidden" name="id" value="{{ user['id'] }}">
           <ul class="list-unstyled">
             <li>

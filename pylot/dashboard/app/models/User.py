@@ -7,15 +7,6 @@ class User(Model):
         super(User, self).__init__()
 
 
-    # def get_users(self):
-        # query = "select * from users order by updated_at desc"
-        # values = {}
-        # users = self.db.query_db(query, values)
-        # return {
-                # 'status': True,
-                # 'users': users
-                # }
-
 
     def register(self, req):
         errors = []
@@ -60,7 +51,7 @@ class User(Model):
                 'last_name': req['last_name'],
                 'pw_hash': self.bcrypt.generate_password_hash(req['password']),
                 'user_level': user_level,
-                'description': description
+                'description': req['description']
                 }
         user = self.db.query_db(query, values)
 
@@ -127,6 +118,7 @@ class User(Model):
                 }
         user = self.db.query_db(query, values)
         status = True if user[0] else False
+        del(user[0]['pw_hash'])
         result = {
                 'status': status,
                 'user': user[0]
@@ -135,7 +127,7 @@ class User(Model):
 
 
     def get_all_users(self):
-        query = "select id, email, first_name, last_name, user_level, description, created_at from users order by id asc"
+        query = "select id, email, first_name, last_name, user_level, description, created_at from users order by updated_at desc"
         values = {}
         users = self.db.query_db(query, values)
         return {
@@ -143,39 +135,102 @@ class User(Model):
                 'users': users
                 }
 
-
-###########
-
-    def update_user(self, id, req):
-        number_pattern = r"^\d+$"
-        if not re.match(number_pattern, req['price']):
-            return {
-                    'status': False,
-                    'messages': ["Price must be number"]
-                    }
-        query = "update users set name=:name, description = :description, price = :price, updated_at = NOW() where id = :id"
+    def update_user_admin(self, req):
+        errors = []
+        email_pattern = r'^[a-za-z0-9\.\+_-]+@[a-za-z0-9\._-]+\.[a-za-z]*$'
+        if not re.match(email_pattern, req['email']):
+            errors.append("email is invalid")
+        if len(req['first_name']) < 2:
+            errors.append("first name should contain at least 3 letters")
+        if len(req['last_name']) < 2:
+            errors.append("last name should contain at least 3 letters")
+        # WIP does not work
+        # print '***** user_level', req['user_level']
+        # if not (req['user_level'] == 1 or req['user_level'] == 9):
+            # errors.append("user level is 1 or 9")
+        for k, v in req.items():
+            if len(v) == 0:
+                errors.append("{} is mandatory".format(k))
+        query = "select id from users where email = :email and id != :id limit 1"
         values = {
-                'id': id,
-                'name': req['name'],
-                'description': req['description'],
-                'price': req['price']
-                }
-        user = self.db.query_db(query, values)
-        result = {
-                'status': True,
-                'user': user
-                }
-        return user
-
-    def destroy_user(self, req):
-        query = "delete from users where id = :id"
-        values = {
+                'email': req['email'],
                 'id': req['id']
                 }
-        user = self.db.query_db(query, values)
-        result = {
-                'status': True,
-                'user': user
+        dup_user = self.db.query_db(query, values)
+        print 'DUP user', dup_user
+        if dup_user:
+            errors.append("this email address is already used")
+
+        if errors:
+            return{
+                    'status': False,
+                    'errors': errors
+                    }
+
+        query = "update users set email = :email, first_name = :first_name, last_name = :last_name, description = :description, user_level = :user_level, updated_at = NOW() where id = :id"
+        values = {
+                'id': req['id'],
+                'email': req['email'],
+                'first_name': req['first_name'],
+                'last_name': req['last_name'],
+                'description': req['description'],
+                'user_level': req['user_level'],
+                'description': ''
                 }
-        return user
+        result = self.db.query_db(query, values)
+        print 'result--', result
+        return {
+                'status': True,
+                'user': result
+                }
+
+
+    def update_user_password_admin(self, req):
+        errors = []
+        user = self.get_user(req['id'])
+        print '====user', user
+        print '====user', user['user']
+        if len(req['password']) < 8:
+            errors.append('password must be more than 8 letters')
+        if req['password'] != req['password_confirmation']:
+            errors.append('password and password_confirmation are not matched')
+        if errors:
+            return {
+                    'status': False,
+                    'errors': errors,
+                    'user': user['user']
+                    }
+        query = "update users set pw_hash = :pw_hash, updated_at = NOW() where id = :id"
+        values = {
+                'pw_hash': self.bcrypt.generate_password_hash(req['password']),
+                'id': req['id']
+                }
+        result = self.db.query_db(query, values)
+
+        return{
+                'status': True,
+                'user': user['user']
+                }
+
+    def destroy(self, req):
+        errors = []
+        query = "delete from users where id = :id"
+        values = {
+                'id' : req['id']
+                }
+        result = self.db.query_db(query, values)
+        print '---result', result
+        return {
+                'status': True
+                }
+
+
+    def create(self, req):
+        print 'create-----', req
+        result = self.register(req)
+        print '---result',result
+        return result
+
+
+
 

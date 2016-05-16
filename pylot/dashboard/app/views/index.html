@@ -38,6 +38,14 @@
         <a href="#" class="btn btn-primary">Start</a>
       </div>
     </div>
+    {% with flashes = get_flashed_messages(category_filter=['error']) %}
+    {% if flashes %}
+    {% for flash in flashes %}
+    <h4>{{ flash }}</h4>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="container">
       <div class="row">
         <div class="col-md-4">

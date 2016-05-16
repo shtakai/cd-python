@@ -8,6 +8,8 @@ class Users(Controller):
     def __init__(self, action):
         super(Users, self).__init__(action)
         self.load_model('User')
+        self.load_model('Message')
+        self.load_model('Comment')
 
     def sign_in(self):
         return self.load_view('/users/sign_in.html')
@@ -16,10 +18,10 @@ class Users(Controller):
         return self.load_view('/users/sign_up.html')
 
     def register(self):
-        print 'register', request.form
+
         result = self.models['User'].register(request.form)
-        print "-" * 10
-        print result
+
+
         if not result['status']:
             for error in result['errors']:
                 flash(error, 'error')
@@ -28,15 +30,15 @@ class Users(Controller):
         return redirect('/login')
 
     def login(self):
-        print '-' * 10
-        print 'login', request.form
+
+
         result = self.models['User'].login(request.form)
         if not result['status']:
             for error in result['errors']:
                 flash(error, 'error')
             return self.load_view('/users/sign_in.html', email=request.form['email'])
 
-        print 'logged in', result
+
         session['user'] = result['user']
         session['user_name'] = result['user_name']
         session['user_level'] = result['user_level']
@@ -46,19 +48,11 @@ class Users(Controller):
 
 
     def dashboard_admin(self):
-        print '-' * 10
-        print 'dashboard_admin', request.form
-        print 'user id:', session['user'], 'user_level:', session['user_level']
-
-        result = self.models['User'].get_user_info(session['user'])
-        print 'result:', result
-        print 'result-user-user_level:', result['user_level']
-        print 'session-user_level:', session['user_level']
-        if not session['user_level'] or not result or result['user_level'] != session['user_level']:
-            flash('disallowed operation')
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
             return redirect('/')
         users = self.models['User'].get_all_users()
-        print 'all users', users
+
         return self.load_view('users/dashboard_admin.html',users=users['users'])
 
     def show(self, id):
@@ -66,64 +60,119 @@ class Users(Controller):
         if not result['status']:
             flash("user not found")
             return redirect('/')
-        print 'get user:', result['user']
-        return self.load_view('users/show.html', user=result['user'])
+
+        user = result['user']
+
+        result = self.models['Message'].get_messages(id)
+        messages = []
+        for message in result['messages']:
+            comments = self.models['Comment'].get_comments(message['id'])
+            print 'comments-----', comments
+            messages.append({
+                'message': message,
+                'comments': comments
+                })
+        print 'messages---', messages
+
+
+
+        return self.load_view('users/show.html', user=user, messages=messages)
 
     def edit(self, id):
-        print '-' * 10
-        print 'edit', request.form
-        print 'id', id,'user id:', session['user'], 'user_level:', session['user_level']
-
-        result = self.models['User'].get_user_info(session['user'])
-        print 'result:', result
-        print 'result-user-user_level:', result['user_level']
-        print 'session-user_level:', session['user_level']
-        if not session['user_level'] or not result or result['user_level'] != session['user_level']:
-            flash('disallowed operation')
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
         result = self.models['User'].get_user(id)
         if not result['status']:
             flash("user not found")
             return redirect('/')
-        print 'get user:', result['user']
-        return self.load_view('users/edit.html', user=result['user'])
+        if result['user']['user_level'] == 9:
+            selected_normal = ""
+            selected_admin = "selected"
+        else:
+            selected_normal ="selected"
+            selected_admin =""
 
 
-    # def new(self):
-        # return self.load_view('new.html')
-
-    # def create(self):
-        # result = self.models['User'].create_User(request.form)
-        # if not result['status']:
-            # for message in result['messages']:
-                # flash(message)
-        # else:
-            # flash('Created User')
-        # return redirect('/')
-
-    # def show(self, id):
-        # result = self.models['User'].get_User(id)
-        # return self.load_view('show.html', User=result['User'])
-
-    # def edit(self, id):
-
-        # result = self.models['User'].get_User(id)
-        # return self.load_view('edit.html', User=result['User'])
-
-    # def update(self, id):
-        # result = self.models['User'].update_User(id, request.form)
-        # if not result['status']:
-            # for message in result['messages']:
-                # flash(message)
-        # else:
-            # flash('Updated User')
-        # return redirect('/')
-
-
-    # def destroy(self):
-        # result = self.models['User'].destroy_User(request.form)
-        # flash('Removed User Successfully')
-        # return redirect('/')
+        return self.load_view('users/edit.html', user=result['user'], selected_normal=selected_normal, selected_admin=selected_admin)
 
 
 
+    def update_user_admin(self):
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
+        result = self.models['User'].update_user_admin(request.form)
+        if not result['status']:
+            for error in result['errors']:
+                flash(error, 'error')
+            user = {
+                    'id': request.form['id'],
+                    'email': request.form['email'],
+                    'first_name': request.form['first_name'],
+                    'last_name': request.form['last_name'],
+                    'description': request.form['description'],
+                    'user_level': request.form['user_level']
+                    }
+            return self.load_view('/users/edit.html', user=user)
 
+        # users = self.models['User'].get_all_users()
+        # return self.load_view('users/dashboard_admin.html',users=users['users'])
+        return redirect('/dashboard/admin')
+
+    def is_admin_user(self):
+        result = self.models['User'].get_user_info(session['user'])
+        if not session['user_level'] or not result or result['user_level'] != 9:
+            return False
+        else:
+            return True
+
+    def update_user_password_admin(self):
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
+        result = self.models['User'].update_user_password_admin(request.form)
+        if not result['status']:
+            for error in result['errors']:
+                flash(error, 'error')
+            user = result['user']
+            return self.load_view('/users/edit.html', user=user)
+
+        print 'updated password'
+        return redirect('/dashboard/admin')
+
+
+    def destroy(self):
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
+        print 'destroy start', request.form
+        result = self.models['User'].destroy(request.form)
+        print 'result', result
+        return redirect('/dashboard/admin')
+
+
+    def new(self):
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
+        print 'new start'
+        return self.load_view('/users/new.html')
+
+    def create(self):
+        if not self.is_admin_user():
+            flash('disallowed operation', 'error')
+            return redirect('/')
+        print 'create start'
+        result = self.models['User'].create(request.form)
+        print 'result===', result
+        if not result['status']:
+            for error in result['errors']:
+                flash(error, 'error')
+            return self.load_view('/users/new.html', email=request.form['email'], first_name=request.form['first_name'], last_name=request.form['last_name'], description=request.form['description'])
+        flash('User registered')
+        return redirect('/dashboard/admin')
+
+    def logout(self):
+        session.clear()
+        return redirect('/')
