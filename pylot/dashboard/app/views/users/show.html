@@ -30,29 +30,28 @@
       </div><!--/.container-fluid -->
     </nav>
 
-    <div class="jumbotron">
-      <div class="container">
-        <h3>Welcome to the Test</h3>
-        <p>We are going to build a cool application using a MVC framework!</p>
-        <p>This application was built with Sashimi folks</p>
-        <a href="#" class="btn btn-primary">Start</a>
-      </div>
-    </div>
     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h4>Manage Users</h4>
-          <p>Using this application, you'll learn how to add, remove and edit users for the application.</p>
-        </div>
-        <div class="col-md-4">
-          <h4>Leave messages</h4>
-          <p>Users will be able to leave a message to another user using this application.</p>
-        </div>
-        <div class="col-md-4">
-        <h4>Edit User Information</h4>
-        <p>Admins will be able to edit another user's information (email address, first name, last name, etc)</p>
-        </div>
-      </div>
+      <h3>Show User</h3>
+      {% with flashes = get_flashed_messages() %}
+      {% if flashes %}
+      {% for flash in flashes %}
+      <h4>{{ flash }}</h4>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <ul class="list-unstyled">
+        <li><h3>{{ user['first_name'] }} {{ user['last_name'] }}</h3></li>
+        <li>Registered at {{ user['created_at'] }}</li>
+        <li>User ID: {{ user['id'] }}</li>
+        <li>Email Address: {{ user['email'] }}</li>
+        <li>Description: {{ user['description'] }}</li>
+        <li>
+          <a href="/users/edit/{{ user['id'] }}">Edit</a>
+          <a href="/">Back</a>
+        </li>
+      </ul>
+
     </div>
   </body>
 </html>

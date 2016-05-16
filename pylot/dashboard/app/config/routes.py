@@ -18,4 +18,13 @@ from system.core.router import routes
 """
 routes['default_controller']            = 'Indexes'
 routes['GET']['/'] = 'Indexes#index'
-routes['GET']['/users'] = 'Users#index'
+routes['GET']['/login'] = 'Users#sign_in'
+routes['GET']['/register'] = 'Users#sign_up'
+routes['POST']['/register'] = 'Users#register'
+routes['POST']['/login'] = 'Users#login'
+routes['GET']['/dashboard/admin'] = 'Users#dashboard_admin'
+routes['GET']['/users/show/<id>'] = 'Users#show'
+routes['GET']['/users/edit/<id>'] = 'Users#edit'
+routes['POST']['/users/update_user'] = 'Users#update_user'
+routes['POST']['/users/update_password'] = 'Users#update_password'
+

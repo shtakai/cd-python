@@ -30,29 +30,51 @@
       </div><!--/.container-fluid -->
     </nav>
 
-    <div class="jumbotron">
-      <div class="container">
-        <h3>Welcome to the Test</h3>
-        <p>We are going to build a cool application using a MVC framework!</p>
-        <p>This application was built with Sashimi folks</p>
-        <a href="#" class="btn btn-primary">Start</a>
-      </div>
-    </div>
     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <h4>Manage Users</h4>
-          <p>Using this application, you'll learn how to add, remove and edit users for the application.</p>
-        </div>
-        <div class="col-md-4">
-          <h4>Leave messages</h4>
-          <p>Users will be able to leave a message to another user using this application.</p>
-        </div>
-        <div class="col-md-4">
-        <h4>Edit User Information</h4>
-        <p>Admins will be able to edit another user's information (email address, first name, last name, etc)</p>
-        </div>
-      </div>
+      <h3>Dashboard Admin</h3>
+      {% with flashes = get_flashed_messages() %}
+      {% if flashes %}
+      {% for flash in flashes %}
+      <h4>{{ flash }}</h4>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Created AT</th>
+            <th>User Level</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user['id'] }}</td>
+            <td>{{ user['first_name'] }} {{ user[last_name] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['created_at'] }}</td>
+            <td>{{ user['user_level'] }}</td>
+            <td>
+              <form action="/users/destroy" method="POST">
+                {% if user['user_level'] != 9 %}
+                  <input type="hidden" name="id" value="{{ user['id'] }}">
+                {% endif %}
+                <a href="/users/show/{{ user['id'] }}" class="btn btn-primary">Show</a>
+                <a href="/users/edit/{{ user['id'] }}" class="btn btn-primary">Edit</a>
+                <input type="submit" value="Remove" class="btn btn-danger">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
     </div>
   </body>
 </html>
