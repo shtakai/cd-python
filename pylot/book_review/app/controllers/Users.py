@@ -18,7 +18,7 @@ class Users(Controller):
 
     def index(self):
         form = {}
-        if session['user']:
+        if session.get('user'):
             return redirect('/books')
 
         return self.load_view('/index.html', form=form)
@@ -55,7 +55,7 @@ class Users(Controller):
 
     def logout(self):
         session.clear()
-        flash('logged out')
+        flash('logged out', 'info')
         return redirect('/')
 
 

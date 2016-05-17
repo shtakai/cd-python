@@ -11,6 +11,7 @@ class Books(Controller):
         self.load_model('Book')
         self.load_model('User')
         self.load_model('Review')
+        self.load_model('Author')
 
     # helper methods
     def set_flash(self, messages, level):
@@ -31,4 +32,24 @@ class Books(Controller):
         book_result = self.models['Book'].get_books_simple(request.form)
         print "--- book_result", book_result
 
-        return self.load_view('/books/index.html', results=review_result['reviews'], books=book_result['books'])
+        return self.load_view('/books/index.html', reviews=review_result['reviews'], books=book_result['books'])
+
+    def new(self):
+        self.redirect_login()
+        print 'Books#new', request.form
+        author_result = self.models['Author'].get_all_authors(request.form)
+        print 'author_result', author_result
+        return self.load_view('/books/new.html', authors=author_result['authors'])
+
+    def create(self):
+        self.redirect_login()
+        print 'Books#create', request.form
+        book_result = self.models['Book'].create(request.form, session['user']['id'])
+        print 'book_result', book_result
+
+        if not book_result['status']:
+            set_flash(errors, 'error')
+            return redirect('/books/add')
+
+        flash("Added Book and Your Review", 'info')
+        return redirect('/books')

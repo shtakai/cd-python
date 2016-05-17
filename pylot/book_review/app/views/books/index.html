@@ -27,7 +27,7 @@
             <li><a href="#">Welcome, {{ session['user']['name'] }}</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Add Book and Review</a></li>
+            <li><a href="/books/add">Add Book and Review</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -61,11 +61,27 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          book reviews
+          <h2>Recent Book Reviews</h2>
+          <div>
+            {% for review in reviews %}
+              <ul class="list-unstyled">
+                <li>
+                  {{ review }}
+                </li>
+              </ul>
+            {% endfor %}
+          </div>
         </div>
 
         <div class="col-md-4">
-          books
+          <h2>books</h2>
+          <div>
+            {% for book in books%}
+              <div>
+                {{ book }}
+              </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

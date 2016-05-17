@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="/static/js/main.js"></script>
+
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Book Review</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Welcome, {{ session['user']['name'] }}</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </nav>
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['error']) %}
+        {% if flashes %}
+          <div class="alert alert-warning">
+            {% for flash in flashes %}
+              <h4>{{ flash }}</h4>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['info']) %}
+        {% if flashes %}
+          <div class="alert alert-info">
+            {% for flash in flashes %}
+              <h4>{{ flash }}</h4>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form class="form" action="/books/create" method="POST">
+            <h2 class="form-heading">Add a New Book Title and Review.</h2>
+            <label for="inputTitle" class="sr-only">Book Title</label>
+            <input type="text" id="inputTitle" class="form-control" placeholder="Book Title" required name="book_title">
+            <label for="inputAuthor" class="sr-only">Choose from the list</label>
+            {% if authors %}
+              <select id="inputAuthor" name="author" class="form-control">
+                <option value="">Select Existing Authors</option>
+                {% for author in authors %}
+                  <option value="{{ author['id'] }}">{{ author['name'] }}</option>
+                {% endfor %}
+              </select>
+            {% endif %}
+            <label for="inputNewAuthor" class="sr-only">or Add a new Author</label>
+            <input type="text" id="inputNewAuhor" class="form-control" placeholder="New Author" name="new_author" >
+            <label for="inputReview" class="sr-only">Review</label>
+            <input type="text" id="inputReview" class="form-control" placeholder="Review" required name="review" >
+            <label for="inputRating" class="sr-only">Rating</label>
+            <select id="inputRating" name="rating" class="form-control">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Book and Review</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container">
+    </div>
+  </body>
+</html>
