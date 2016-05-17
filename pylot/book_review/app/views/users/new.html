@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </nav>
+
+    <div class="container">
+      <h3>Add User</h3>
+      {% with flashes = get_flashed_messages(category_filter=['error']) %}
+      {% if flashes %}
+      {% for flash in flashes %}
+      <h4>{{ flash }}</h4>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <form action="/users/create" method="POST">
+        <ul class="list-unstyled">
+          <li>
+            <label for="email">email:</label><input id="email" type="text" name="email" value="{{ email }}">
+          </li>
+          <li>
+            <label for="email">first name:</label><input id="first_name" type="text" name="first_name" value="{{ first_name }}">
+          </li>
+          <li>
+            <label for="email">last name:</label><input id="last_name" type="text" name="last_name" value="{{ last_name }}">
+          </li>
+          <li>
+            <label for="description">description:</label><input id="description" type="text" name="description" value="{{ description }}">
+          </li>
+          <li>
+            <label for="password">password:</label><input id="password" type="password" name="password">
+          </li>
+          <li>
+            <label for="password">password confirmation:</label><input id="password_confirmation" type="password" name="password_confirmation">
+          </li>
+          <li>
+            <input type="submit" value="Add User" class="btn btn-primary">
+          </li>
+        </ul>
+      </form>
+    </div>
+  </body>
+</html>
