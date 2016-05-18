@@ -27,4 +27,10 @@ class Reviews(Controller):
 
         return self.load_view('/index.html', form=form)
 
+    def destroy(self, id):
+        review_result = self.models['Review'].destroy(request.form, id)
+        flash('deleted review', 'info')
+        return redirect('/')
+
+
 
