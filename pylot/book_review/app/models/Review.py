@@ -9,7 +9,7 @@ class Review(Model):
 
     def get_reviews(self, req):
         print 'Review#get_reviews start', req
-        query = 'select reviews.*, books.* from reviews inner join books on books.id = reviews.book_id order by reviews.updated_at desc limit 3'
+        query = 'select reviews.*, books.*, users.id as user_id, users.alias as user_alias, users.name as user_name from reviews inner join books on books.id = reviews.book_id inner join users on reviews.user_id = users.id order by reviews.updated_at desc limit 3'
         values = {}
         review_result = self.db.query_db(query, values)
         print 'review_result', review_result

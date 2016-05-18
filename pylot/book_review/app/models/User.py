@@ -111,8 +111,29 @@ class User(Model):
                 'user_email': user['email']
                 }
 
+    def get_user(self, user_id):
+        # query = 'select id, name, alias, email, created_at, updated_at from users where id = :id'
+        # get user information with review count
+        query = 'select users.id, users.name, users.alias, users.email, users.created_at, users.updated_at, count(*) as review_count from users inner join reviews on users.id = reviews.user_id where users.id = :user_id group by users.id limit 1'
+        values = {
+                'user_id': user_id
+                }
+        user_result = self.db.query_db(query, values)
+        print 'user_result', user_result
 
+        # get book titles reviewed by this user
+        query = 'select distinct books.id, books.title from books inner join reviews on books.id = reviews.book_id inner join users on reviews.user_id = users.id where users.id = :user_id order by reviews.updated_at desc'
+        values = {
+                'user_id': user_id
+                }
+        book_result = self.db.query_db(query, values)
+        print 'book_result', book_result
 
+        return {
+                'status': True,
+                'user': user_result[0],
+                'reviewed_books': book_result
+                }
 
 
 '''

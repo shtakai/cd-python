@@ -28,7 +28,6 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">Home</a></li>
-            <li><a href="/books/add">Add Book and Review</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -60,28 +59,24 @@
     </div>
 
     <div class="container well">
+      {{ book }}
       <ul class="list-unstyled">
         <li>
-          <h2>User Alias: {{ user['alias'] }}</h2>
+          <h2></h2>
         </li>
         <li>
-          <h3>Name: {{ user['name'] }}</h3>
-        </li>
-        <li>
-          <h3>Email: {{ user['email'] }}</h3>
-        </li>
-        <li>
-          <h3>Total Reviews: {{ user['review_count'] }}</h3>
+          <h3></h3>
         </li>
       </ul>
     </div>
     <div class="container well">
+      {{ reviews }}
       <ul class="list-unstyled">
         <li>
-          <h2>Posted Reviews on the following Books</h2>
+          <h2>Reviews</h2>
         </li>
-        {% for book in books %}
-          <h3><a href="/books/show/{{ book['id'] }}">{{ book['title'] }}</a></h3>
+        {% for review in reviews %}
+          <h3>review</h3>
         {% endfor %}
       </ul>
     </div>

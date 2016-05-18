@@ -8,7 +8,7 @@ class Book(Model):
 
     def get_books_simple(self, req):
         print "Book#get_books_simple start", req
-        query = 'select id, title from books order by updated_at desc'
+        query = 'select books.id, books.title, count(*) as review_count from books inner join reviews on books.id = reviews.book_id group by books.id order by reviews.updated_at desc'
         values = {}
         book_result = self.db.query_db(query, values)
         print 'book_result', book_result
@@ -92,5 +92,35 @@ class Book(Model):
                 'status': True,
                 'book': book_result,
                 'review': review_result,
-                'author': author_result
+                'author': author_result,
+                'user': user_result
+                }
+
+
+    def get_book(self, book_id):
+        print 'Book#get_book', book_id
+        # get book info w/author
+        query = 'select books.id, books.title, books.author_id, authors.name as author_name from books inner join authors on books.author_id = authors.id where books.id = :book_id limit 1'
+        values = {
+                'book_id': book_id
+                }
+        book_result = self.db.query_db(query, values)
+        print 'book_result', book_result
+        if not book_result:
+            return {
+                    'status': False
+                    }
+
+        # get 3 reviews w/user
+        query = 'select reviews.*, users.alias from reviews inner join users on reviews.user_id = users.id where reviews.book_id = :book_id order by reviews.updated_at desc limit 3'
+        values = {
+                'book_id': book_id
+                }
+        review_result = self.db.query_db(query, values)
+        print 'review_result'
+
+        return {
+                'status': True,
+                'book_result': book_result[0],
+                'review_result': review_result
                 }

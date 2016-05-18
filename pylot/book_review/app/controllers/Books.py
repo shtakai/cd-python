@@ -32,6 +32,7 @@ class Books(Controller):
         book_result = self.models['Book'].get_books_simple(request.form)
         print "--- book_result", book_result
 
+
         return self.load_view('/books/index.html', reviews=review_result['reviews'], books=book_result['books'])
 
     def new(self):
@@ -53,3 +54,13 @@ class Books(Controller):
 
         flash("Added Book and Your Review", 'info')
         return redirect('/books')
+
+    def show(self, id):
+        print 'Books#show', request.form, id
+        book_result = self.models['Book'].get_book(id)
+        print 'book_result', book_result
+        if not book_result['status']:
+            set_flash(['failed loading book'], 'error')
+            return redirect('/')
+
+        return self.load_view('/books/show.html', book=book_result['book_result'], reviews=book_result['review_result'])

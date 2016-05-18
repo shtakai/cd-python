@@ -58,6 +58,18 @@ class Users(Controller):
         flash('logged out', 'info')
         return redirect('/')
 
+    def show(self, id):
+        print 'Users#show', request.form, id
+        user_result = self.models['User'].get_user(id)
+        print 'user_result', user_result
+        if not user_result['status']:
+            set_flash(['User not found'], 'error')
+            return redirect('/')
+
+        # pass
+        return self.load_view('/users/show.html', user=user_result['user'], books=user_result['reviewed_books'])
+
+
 
 ####################
 '''
