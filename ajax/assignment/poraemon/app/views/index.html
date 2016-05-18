@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="/static/js/main.js"></script>
+
+    <title>Pocket Doraemon</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Pocket Doraemon/ DIGITAL SUPERSTAR LEGENDS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#"></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://pokeapi.co/">API</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </nav>
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['error']) %}
+        {% if flashes %}
+          <div class="alert alert-warning">
+            {% for flash in flashes %}
+              <h4>{{ flash }}</h4>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['info']) %}
+        {% if flashes %}
+          <div class="alert alert-info">
+            {% for flash in flashes %}
+              <h4>{{ flash }}</h4>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="container">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/9qkw6_Yg6F0" frameborder="0" allowfullscreen></iframe>
+      <div class="row">
+        {% for i in range(1, 700) %}
+        <div class="col-md-3">
+          <img src="http://pokeapi.co/media/img/{{ i }}.png">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
