@@ -16,10 +16,20 @@ class Notes(Controller):
             flash(message, level)
 
     def index(self):
+        # print 'Notes#index', request.form
+        # notes_result = self.models['Note'].get_all_notes()
+        # print 'notes_result', notes_result
+        return self.load_view('/index.html')
+
+    def index_json(self):
         print 'Notes#index', request.form
         notes_result = self.models['Note'].get_all_notes()
         print 'notes_result', notes_result
-        return self.load_view('/index.html', notes=notes_result['result'])
+        return self.load_view('partials/_index.html', notes=notes_result['result'])
+
+    def new(self):
+        print 'Notes#new', request.form
+        return self.load_view('partials/_new.html')
 
     def create(self):
         print 'Notes#create', request.form

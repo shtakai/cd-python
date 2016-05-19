@@ -1,9 +1,22 @@
-{% for post in posts%}
-<div class="col s12 m4">
-  <div class="card indigo">
-    <div class="card-content white-text">
-      <p>{{ post['description'] }}</p>
+<div class="row">
+  <form class="col s12" id="noteform" action="/notes/create" method="POST">
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="title" placeholder="title" id="title" type="text" class="validate">
+        <label for="title">Title</label>
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="description" class="materialize-textarea" name="description"></textarea>
+        <label for="description">Description</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="submit" name="submit" id="postnote" value="Post" class="waves-effect waves-light btn">
+        <label for="description">Description</label>
+      </div>
+    </div>
+  </form>
 </div>
-{% endfor %}
