@@ -4,3 +4,5 @@
 venv/*
 .env.js
 bower_components
+node_modules
+app/static/lib
