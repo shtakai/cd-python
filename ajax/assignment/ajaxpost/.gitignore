@@ -1,0 +1,6 @@
+*.DS_store
+*.swp
+*.pyc
+venv/*
+.env.js
+bower_components
