@@ -1,25 +1,19 @@
-// once the document is loaded
 $(document).ready(function(){
-  // we'll add a click handler to the button
-  $('#get_all_button').click(function(){
-    // this is the jQuery get function, which we'll use to send Ajax requests
-    // to this function we are passing 3 arguments
-    // a url, function, and the dataType parameter
-    $.get('/quotes/index_json', function(res) {
-      // the function will send a request to the above url and get a response
-      // which we will store in the variable 'res'
-      var htmlStr = ""; // we create an empty string
-      // then loop through our res and create a string of html tags below
-      for(var i = 0; i < res['quotes'].length; i++) {
-        htmlStr += "<div class='quote'>";
-        htmlStr += "<h2>" + res.quotes[i].author + "</h2>";
-        htmlStr += "<p>" + res.quotes[i].quote + "</p>";
-        htmlStr += "</div>";
-      }
-      // uncomment the line below to see what our string looks like
-      // console.log(htmlStr);
-      // insert our string into our document using jQuery
-      $('#quotes').html(htmlStr);
-    }, 'json');
+  $('form').submit(function(){
+    // there are three arguments that we are passing into $.post function
+    //     1. the url we want to go to: '/quotes/create'
+    //     2. what we want to send to this url: $(this).serialize()
+    //            $(this) is the form and by calling .serialize() function on the form it will
+    //            send post data to the url with the names in the inputs as keys
+    //     3. the function we want to run when we get a response:
+    //            function(res) { $('#quotes').html(res) }
+    console.log($(this).serialize());
+    $.post('/quotes/create', $(this).serialize(), function(res) {
+      console.log(res);
+      $('#quotes').html(res);
+    });
+    // we have to return false for it to be a single page application because without it jQuery's
+    // submit function will cause a refresh of the page which would defeat the point of AJAX
+    return false;
   });
 });

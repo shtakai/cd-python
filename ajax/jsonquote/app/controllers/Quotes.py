@@ -10,15 +10,30 @@ class Quotes(Controller):
         super(Quotes, self).__init__(action)
         self.load_model('Quote')
 
-    # helper methods
-    # def set_flash(self, messages, level):
-        # for message in messages:
-            # flash(message, level)
-
     def index(self):
-        return self.load_view('/quotes/index.html')
+        quotes = self.models['Quote'].all()
+        return self.load_view('quotes/index.html', quotes=quotes)
+
+    def index_html(self):
+        quotes = self.models['Quote'].all()
+        return self.load_view('partials/quotes.html', quotes=quotes)
 
     def index_json(self):
-        print '---'
         quotes = self.models['Quote'].all()
         return jsonify(quotes=quotes)
+
+    def create(self):
+        print 'Quotes#create', request.form
+        # the form data is still accessed in the same way as when we normally submitted the form
+        # $(this).serialize() helped us send this info over to this url
+        new_quote = {
+                   "author": request.form['author'],
+                   "quote": request.form['quote']
+                }
+        # we create a quote with our existing model function
+        self.models['Quote'].create(new_quote)
+        # we then retrieve the updated list of quotes from the database which will include our new quote
+        quotes = self.models['Quote'].all()
+        # finally we will respond to the AJAX request with a partial that will use the quotes
+        # retreived from the database to generate the appropriate html
+        return self.load_view('partials/quotes.html', quotes=quotes)

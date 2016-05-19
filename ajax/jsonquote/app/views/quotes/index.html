@@ -58,8 +58,26 @@
     </div>
 
     <div class="container">
-      <button id="get_all_button">GET OR DIE</button>
-      <div id="quotes"></div>
+     <h1>Quotsy</h1>
+      <form action="/quotes/create" method="post">
+         <p>
+            <label>Author: </label>
+            <input type="text" name="author">
+         </p>
+         <p>
+            <label>Quote: </label>
+            <textarea name="quote"></textarea>
+         </p>
+         <input type="submit" value="Add Quote">
+      </form>
+      <div id="quotes">
+        {% for quote in quotes %}
+          <div class='quote'>
+            <h2>{{ quote['author'] }}</h2>
+            <p>{{ quote['quote'] }}</p>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </body>
 </html>

@@ -10,3 +10,14 @@ class Quote(Model):
         query = 'select * from quotes'
         return self.db.query_db(query)
 
+    def create(self, new_quote):
+        print 'Quote#create', new_quote
+        query = 'insert into quotes (quote, author) values (:quote, :author)'
+        values ={
+                'quote': new_quote['quote'],
+                'author': new_quote['author']
+                }
+        quote_result = self.db.query_db(query, values)
+
+        return quote_result
+

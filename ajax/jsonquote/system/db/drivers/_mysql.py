@@ -34,7 +34,7 @@ def connect(config, app):
             # return the results as a list of dictionaries
             return list_result
         elif query[0:6].lower() == 'insert':
-            # if the query was an insert, return the id of the 
+            # if the query was an insert, return the id of the
             # commit changes
             app.db.session.commit()
             # row that was inserted
@@ -46,7 +46,7 @@ def connect(config, app):
     def _get_one(query, data=None):
         result = db.session.execute(text(query), data).fetchone()
         return result
-        
+
     db.query_db = _query_db
     db.get_one = _get_one
     return db
