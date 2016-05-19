@@ -26,3 +26,12 @@ class Posts(Controller):
         post_result = self.models['Post'].create(request.form)
         print 'post_result', post_result
         return redirect('/')
+
+
+    def create(self):
+        print 'Posts#create', request.form
+        self.models['Post'].create(request.form)
+        posts_result = self.models['Post'].get_all_posts()
+        print 'posts_result', posts_result
+        # return post_result
+        return self.load_view('partials/post.html', posts=posts_result['result'])
