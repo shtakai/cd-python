@@ -17,5 +17,12 @@ class Posts(Controller):
 
     def index(self):
         print 'Posts#index', request.form
-        return self.load_view('/index.html')
+        posts_result = self.models['Post'].get_all_posts()
+        print 'posts_result', posts_result
+        return self.load_view('/index.html', posts=posts_result['result'])
 
+    def create_html(self):
+        print 'Posts#create_html', request.form
+        post_result = self.models['Post'].create(request.form)
+        print 'post_result', post_result
+        return redirect('/')

@@ -3,31 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <script src="/static/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../static/lib/Materialize/dist/js/materialize.min.js"></script>
     <script src="/static/lib/underscore/underscore-min.js"></script>
-    <link rel="stylesheet" href="/static/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/lib/Materialize/dist/css/materialize.min.css">
     <link rel="stylesheet" href="/static/lib/font-awesome/css/font-awesome.css.map">
 
     <script src="/static/js/main.js"></script>
-
+    <link rel="stylesheet" href="/statis/css/style.css">
     <title>TEMPLATE</title>
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Dashboard</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#"></a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"></a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
-    </nav>
 
     <div class="container">
       {% with flashes = get_flashed_messages(category_filter=['error']) %}
@@ -53,8 +38,31 @@
       {% endwith %}
     </div>
 
+    <div class="row">
+      {% for post in posts%}
+      <div class="col s12 m4">
+        <div class="card indigo">
+          <div class="card-content white-text">
+            <p>{{ post['description'] }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
     <div class="container">
-        <!--main content is here-->
+       <div class="row">
+          <form action="/notes/create_html" method="POST" class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea" name="description"></textarea>
+                <label for="textarea1">Description</label>
+                <input type="submit" name="submit" id="submit" value="Post" class="waves-effect waves-light btn">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>
