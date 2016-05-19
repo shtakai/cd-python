@@ -2,11 +2,11 @@ $(document).ready(function () {
 
   $('#textarea1').trigger('autoresize');
 
-  $('form#noteform').click(function (e) {
+  $('#postnote').click(function (e) {
     console.log('clicked');
-    $.post('/notes/create', $(this).serialize(), function(res) {
+    $.post('/notes/create', $('form#noteform').serialize(), function(res) {
       console.log($('form#noteform'));
-      console.log(res);
+      //console.log(res);
       $('#posts').html(res);
       $('#description').val("");
 
