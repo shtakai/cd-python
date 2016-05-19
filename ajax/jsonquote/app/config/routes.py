@@ -1,0 +1,4 @@
+from system.core.router import routes
+
+routes['default_controller'] = 'Quotes'
+routes['GET']['/quotes/index_json'] = 'Quotes#index_json'
