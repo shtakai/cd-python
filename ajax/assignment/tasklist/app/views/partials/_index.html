@@ -1,19 +1,15 @@
 {% for task in tasks%}
-<div class="col s12 m4">
-  <div class="card indigo">
-    <div class="card-content white-text">
-      <form action="/tasks/update/{{ task['id'] }}" method="POST">
-        <span class="card-title yellow-text">
-          <input type="text" name="title" value="{{ task['title'] }}">
-        </span>
-        <textarea name="description" cols="30" rows="10" >{{ task['description'] }}</textarea>
-        <span class="card-title yellow-text">{{ task['updated_at'] }}</span>
-        <input type="submit" value="Update Post" class="btn">
-      </form>
-      <form action="/tasks/delete/{{ task['id'] }}" method="POST">
-        <input type="submit" value="Delete Post" class="btn">
-      </form>
-    </div>
-  </div>
+<div>
+  <form action="/tasks/update/{{ task['id'] }}" method="POST" >
+    <input type="submit" value="Edit" class="btn btn-primary btn-sm" >
+    <input type="checkbox" name='finished' id="taskcheck-{{ task['id'] }}" class="finished"
+                                           {% if task['finished'] %}
+                                           checked
+                                           {% endif %}
+                                           />
+    <label for="task-{{ task['id'] }}" class="col s3">
+      <input type="text" name="name" value="{{ task['name'] }}" >
+    </label>
+  </form>
 </div>
-{% endfor %}
+    {% endfor %}

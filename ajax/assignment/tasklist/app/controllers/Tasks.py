@@ -32,16 +32,16 @@ class Tasks(Controller):
     def create(self):
         task_result = self.models['Task'].create(request.form)
         flash('created task', 'info')
-        return redirect('/')
-        # return redirect('/tasks')
+        # return redirect('/')
+        return redirect('/tasks')
 
     def update(self, id):
         print 'update', request.form, id
         finished = True if request.form.get('finished') else False
         task_result = self.models['Task'].update(request.form, id, finished)
         flash('updated task', 'info')
-        return redirect('/')
-        # return redirect('/tasks')
+        # return redirect('/')
+        return redirect('/tasks')
 
 
     # def destroy(self, id):
