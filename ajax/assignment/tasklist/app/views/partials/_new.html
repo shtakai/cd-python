@@ -1,0 +1,22 @@
+<div class="row">
+  <form class="col s12" id="taskform" action="/tasks/create" method="POST">
+    <div class="row">
+      <div class="input-field col s12">
+        <input name="title" placeholder="title" id="title" type="text" class="validate">
+        <label for="title">Title</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="description" class="materialize-textarea" name="description"></textarea>
+        <label for="description">Description</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input type="submit" name="submit" id="posttask" value="Post" class="waves-effect waves-light btn">
+        <label for="description">Description</label>
+      </div>
+    </div>
+  </form>
+</div>

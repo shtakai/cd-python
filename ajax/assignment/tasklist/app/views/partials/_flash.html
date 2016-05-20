@@ -1,0 +1,24 @@
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['error']) %}
+       {% if flashes %}
+      <div>
+        {% for flash in flashes %}
+        <h4 class="red-text">{{ flash }}</h4>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="container">
+      {% with flashes = get_flashed_messages(category_filter=['info']) %}
+      {% if flashes %}
+      <div>
+        {% for flash in flashes %}
+        <h4><span class="blue-text">{{ flash }}</span></h4>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
